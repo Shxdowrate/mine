@@ -13,6 +13,9 @@ import com.shxdowrate.solorust.registry.ModItems;
 import com.shxdowrate.solorust.registry.ModSuits;
 import com.shxdowrate.solorust.suit.SuitManager;
 import com.shxdowrate.solorust.suit.SuitProjectiles;
+import com.shxdowrate.solorust.suit.SuitAssembly;
+import com.shxdowrate.solorust.suit.SuitActions;
+import com.shxdowrate.solorust.suit.TitanDrop;
 import com.shxdowrate.solorust.registry.ModWorldgen;
 import com.shxdowrate.solorust.mechanics.VeinMiner;
 
@@ -44,6 +47,9 @@ public class SoloRust implements ModInitializer {
 		VeinMiner.init();
 		SuitManager.init();
 		SuitProjectiles.init();
+		SuitAssembly.init();
+		TitanDrop.init();
+		SuitActions.init();
 
 		LOGGER.info("Solo Rust loaded");
 	}

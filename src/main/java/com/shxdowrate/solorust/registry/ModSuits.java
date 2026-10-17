@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.shxdowrate.solorust.suit.SuitArmorItem;
+import com.shxdowrate.solorust.suit.SuitContainerItem;
 import com.shxdowrate.solorust.suit.SuitTier;
 import com.shxdowrate.solorust.suit.SuitWeapon;
 import com.shxdowrate.solorust.suit.SuitWeaponItem;
@@ -25,6 +26,7 @@ public final class ModSuits {
 	public static final Map<SuitTier, Map<ArmorType, SuitArmorItem>> ARMOR = new EnumMap<>(SuitTier.class);
 	public static final Map<SuitWeapon, SuitWeaponItem> WEAPONS = new EnumMap<>(SuitWeapon.class);
 	public static final List<SuitArmorItem> ALL_ARMOR = new ArrayList<>();
+	public static final Map<SuitContainerItem.Kind, SuitContainerItem> CONTAINERS = new EnumMap<>(SuitContainerItem.Kind.class);
 
 	private static final ArmorType[] PIECES = {ArmorType.HELMET, ArmorType.CHESTPLATE, ArmorType.LEGGINGS, ArmorType.BOOTS};
 
@@ -65,12 +67,22 @@ public final class ModSuits {
 		}
 	}
 
+	public static final SuitContainerItem SUITCASE = container(SuitContainerItem.Kind.SUITCASE, "suitcase", Rarity.UNCOMMON);
+	public static final SuitContainerItem NANO_CAPSULE = container(SuitContainerItem.Kind.NANO_CAPSULE, "nano_capsule", Rarity.EPIC);
+	public static final SuitContainerItem TITAN_BEACON = container(SuitContainerItem.Kind.TITAN_BEACON, "titan_beacon", Rarity.EPIC);
+
+	private static SuitContainerItem container(SuitContainerItem.Kind kind, String id, Rarity rarity) {
+		SuitContainerItem item = ModItems.register(id, p -> new SuitContainerItem(p, kind), new Item.Properties().stacksTo(1).rarity(rarity).fireResistant());
+		CONTAINERS.put(kind, item);
+		return item;
+	}
+
 	private ModSuits() {
 	}
 
 	private static Rarity rarity(SuitTier tier) {
 		return switch (tier) {
-			case MK1 -> Rarity.UNCOMMON;
+			case MK1, LIGHT -> Rarity.UNCOMMON;
 			case MK2, MK3 -> Rarity.RARE;
 			case TITAN, NANO -> Rarity.EPIC;
 		};

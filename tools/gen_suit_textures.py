@@ -19,6 +19,7 @@ PALETTES = {
     "mk2": dict(base=(196, 202, 212), dark=(118, 124, 136), accent=(160, 170, 186), glow=(175, 240, 255), style="plain"),
     "mk3": dict(base=(42, 84, 172), dark=(20, 38, 92), accent=(226, 232, 242), glow=(80, 222, 255), style="panels"),
     "titan": dict(base=(228, 128, 32), dark=(38, 38, 44), accent=(250, 210, 40), glow=(255, 224, 80), style="hazard"),
+    "light": dict(base=(214, 220, 222), dark=(46, 60, 66), accent=(64, 196, 170), glow=(127, 255, 212), style="panels"),
     "nano": dict(base=(32, 32, 40), dark=(14, 14, 20), accent=(72, 60, 96), glow=(184, 112, 255), style="circuit"),
 }
 
@@ -542,6 +543,116 @@ CORE = (["................",
          "................"], {"A": (45, 50, 60), "C": (140, 150, 165), "G": (80, 200, 255), "B": (160, 235, 255), "W": (250, 255, 255)})
 
 
+CONTAINER_ICONS = {
+    "suitcase": (["................",
+                  "................",
+                  "......AAAA......",
+                  "......A..A......",
+                  "..AAAAAAAAAAAA..",
+                  ".ABBBBBBBBBBBBA.",
+                  ".ABBBBBBBBBBBBA.",
+                  ".ADDDDDGGDDDDDA.",
+                  ".ABBBBBGGBBBBBA.",
+                  ".ABBBBBBBBBBBBA.",
+                  ".ABBBBBBBBBBBBA.",
+                  ".ABBBBBBBBBBBBA.",
+                  "..AAAAAAAAAAAA..",
+                  "................",
+                  "................",
+                  "................"], {"A": (40, 48, 52), "B": (200, 206, 210), "D": (64, 196, 170), "G": (230, 255, 245)}),
+    "nano_capsule": (["................",
+                      "................",
+                      "......AAAA......",
+                      ".....ABBBBA.....",
+                      "....ABGGGGBA....",
+                      "...ABGPPPPGBA...",
+                      "...ABGPWWPGBA...",
+                      "...ABGPWWPGBA...",
+                      "...ABGPPPPGBA...",
+                      "....ABGGGGBA....",
+                      ".....ABBBBA.....",
+                      "......AAAA......",
+                      "................",
+                      "................",
+                      "................",
+                      "................"], {"A": (14, 14, 20), "B": (40, 38, 52), "G": (140, 90, 220), "P": (184, 112, 255), "W": (240, 228, 255)}),
+    "titan_beacon": ([".......W........",
+                      ".......Y........",
+                      "......AYA.......",
+                      "......ABA.......",
+                      ".....ABBBA......",
+                      ".....ABYBA......",
+                      ".....ABBBA......",
+                      ".....ABYBA......",
+                      ".....ABBBA......",
+                      "....ABBBBBA.....",
+                      "....ADDDDDA.....",
+                      "...ADD.D.DDA....",
+                      "...AD.....DA....",
+                      "...A.......A....",
+                      "................",
+                      "................"], {"A": (35, 35, 40), "B": (228, 128, 32), "D": (70, 70, 76), "Y": (255, 224, 80), "W": (255, 255, 230)}),
+}
+
+
+def block_textures():
+    blk = os.path.join(ROOT, "block")
+    rnd = random.Random(7)
+    steel, dark, glow = (120, 126, 136), (52, 56, 64), (80, 222, 255)
+
+    def plate(c, n=0.06):
+        return shade(c, rnd.uniform(1 - n, 1 + n))
+
+    # Станция: верх — платформа с отметкой для ног, бок — стойка с манипуляторами, низ — основание.
+    cv = Canvas(16, 16)
+    cv.rect(0, 0, 16, 16, lambda x, y, w, h: dark if x in (0, 15) or y in (0, 15) else plate(steel))
+    for x, y in [(5, 5), (6, 5), (9, 5), (10, 5), (5, 10), (6, 10), (9, 10), (10, 10)]:
+        cv.set(x, y, glow)
+    for i in range(3, 13):
+        cv.set(i, 3, shade(glow, 0.6)); cv.set(i, 12, shade(glow, 0.6))
+    cv.save(os.path.join(blk, "suit_station_top.png"))
+
+    for name, loaded in (("suit_station_side", False), ("suit_station_side_loaded", True)):
+        cv = Canvas(16, 16)
+        cv.rect(0, 0, 16, 16, lambda x, y, w, h: dark if x in (0, 15) or y in (0, 15) else plate(shade(steel, 0.8)))
+        for y in range(2, 14):
+            cv.set(2, y, steel); cv.set(13, y, steel)  # стойки
+        for x in range(2, 14):
+            cv.set(x, 2, steel)
+        if loaded:
+            # силуэт костюма на станции
+            sil = ["..AAAA..", "..AGGA..", "..AAAA..", "AAAAAAAA", "A.ACCA.A", "A.AAAA.A", "..A..A..", "..A..A..", "..A..A..", ".AA..AA."]
+            for yy, row in enumerate(sil):
+                for xx, ch in enumerate(row):
+                    if ch == "A":
+                        cv.set(4 + xx, 3 + yy, (60, 90, 170))
+                    elif ch == "G":
+                        cv.set(4 + xx, 3 + yy, glow)
+                    elif ch == "C":
+                        cv.set(4 + xx, 3 + yy, glow)
+        else:
+            for x in range(5, 11):
+                cv.set(x, 13, shade(glow, 0.5))
+        cv.save(os.path.join(blk, name + ".png"))
+
+    cv = Canvas(16, 16)
+    cv.rect(0, 0, 16, 16, lambda x, y, w, h: dark if (x + y) % 5 == 0 else plate(shade(steel, 0.6)))
+    cv.save(os.path.join(blk, "suit_station_bottom.png"))
+
+    # Капсула «Титана»: оранжево-чёрная, со светящимися полосами.
+    orange, black, yellow = (228, 128, 32), (36, 36, 42), (255, 224, 80)
+    cv = Canvas(16, 16)
+    cv.rect(0, 0, 16, 16, lambda x, y, w, h: black if x in (0, 15) or y in (0, 15) or (y >= 12 and (x + y) % 4 < 2) else plate(orange))
+    for y in range(2, 11):
+        cv.set(7, y, yellow); cv.set(8, y, yellow)
+    cv.save(os.path.join(blk, "titan_pod_side.png"))
+    cv = Canvas(16, 16)
+    cv.rect(0, 0, 16, 16, lambda x, y, w, h: black if x in (0, 15) or y in (0, 15) or abs(x - 7.5) + abs(y - 7.5) > 9 else plate(orange))
+    for x, y in [(7, 7), (8, 7), (7, 8), (8, 8)]:
+        cv.set(x, y, yellow)
+    cv.save(os.path.join(blk, "titan_pod_top.png"))
+
+
 def main():
     for name, p in PALETTES.items():
         humanoid(name, p)
@@ -552,6 +663,11 @@ def main():
         draw_icon(rows, colors, os.path.join(ITEM, f"suit_{weapon}.png"))
 
     draw_icon(CORE[0], CORE[1], os.path.join(ITEM, "suit_power_core.png"))
+
+    for name, (rows, colors) in CONTAINER_ICONS.items():
+        draw_icon(rows, colors, os.path.join(ITEM, f"{name}.png"))
+
+    block_textures()
     print("ok")
 
 

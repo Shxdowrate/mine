@@ -20,6 +20,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import com.shxdowrate.solorust.block.SuitStationBlock;
+import com.shxdowrate.solorust.block.TitanPodBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -53,6 +55,17 @@ public final class ModBlocks {
 	public static final Block RECYCLER = register("recycler", RecyclerBlock::new, BlockBehaviour.Properties.of()
 			.mapColor(MapColor.COLOR_YELLOW).strength(4.0f).requiresCorrectToolForDrops().sound(SoundType.METAL));
 
+	// --- Силовая броня ---
+	public static final Block SUIT_STATION = register("suit_station", SuitStationBlock::new, BlockBehaviour.Properties.of()
+			.mapColor(MapColor.METAL).strength(5.0f, 12.0f).requiresCorrectToolForDrops().sound(SoundType.NETHERITE_BLOCK));
+	public static final Block TITAN_POD = register("titan_pod", TitanPodBlock::new, BlockBehaviour.Properties.of()
+			.mapColor(MapColor.COLOR_ORANGE).strength(4.0f, 30.0f).sound(SoundType.NETHERITE_BLOCK).lightLevel(state -> 6));
+
+	static {
+		// Капсулу нельзя поставить руками — она падает только по маяку.
+		BLOCK_ITEMS.remove(BuiltInRegistries.ITEM.getValue(SoloRust.id("titan_pod")));
+	}
+
 	private ModBlocks() {
 	}
 
@@ -81,6 +94,11 @@ public final class ModBlocks {
 		Item item = Registry.register(BuiltInRegistries.ITEM, itemKey, new BlockItem(block, new Item.Properties().setId(itemKey)));
 		BLOCK_ITEMS.add(item);
 		return block;
+	}
+
+	/** Предмет-блок по блоку (через реестр, не зависит от Item.BY_BLOCK). */
+	public static Item item(Block block) {
+		return BuiltInRegistries.ITEM.getValue(BuiltInRegistries.BLOCK.getKey(block));
 	}
 
 	public static void init() {

@@ -10,6 +10,7 @@ import com.shxdowrate.solorust.gun.GunStats;
 import com.shxdowrate.solorust.item.GunItem;
 import com.shxdowrate.solorust.network.GunActionPayload;
 import com.shxdowrate.solorust.network.RecoilPayload;
+import com.shxdowrate.solorust.network.SuitActionPayload;
 import com.shxdowrate.solorust.registry.ModComponents;
 import com.shxdowrate.solorust.registry.ModSounds;
 
@@ -34,6 +35,10 @@ public class SoloRustClient implements ClientModInitializer {
 			new KeyMapping("key.solorust.reload", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_R, CATEGORY));
 	public static final KeyMapping HELMET_TOGGLE = KeyMappingHelper.registerKeyMapping(
 			new KeyMapping("key.solorust.helmet_toggle", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_H, CATEGORY));
+	public static final KeyMapping SUIT_TOGGLE = KeyMappingHelper.registerKeyMapping(
+			new KeyMapping("key.solorust.suit_toggle", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_G, CATEGORY));
+	public static final KeyMapping SUIT_RECALL = KeyMappingHelper.registerKeyMapping(
+			new KeyMapping("key.solorust.suit_recall", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_V, CATEGORY));
 	public static final KeyMapping HELMET_MENU = KeyMappingHelper.registerKeyMapping(
 			new KeyMapping("key.solorust.helmet_menu", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_J, CATEGORY));
 
@@ -66,6 +71,18 @@ public class SoloRustClient implements ClientModInitializer {
 			while (HELMET_TOGGLE.consumeClick()) {
 				if (client.player != null && HelmetHud.helmet(client.player) != null) {
 					HelmetHud.toggle();
+				}
+			}
+
+			while (SUIT_TOGGLE.consumeClick()) {
+				if (client.player != null) {
+					ClientPlayNetworking.send(new SuitActionPayload(SuitActionPayload.TOGGLE));
+				}
+			}
+
+			while (SUIT_RECALL.consumeClick()) {
+				if (client.player != null) {
+					ClientPlayNetworking.send(new SuitActionPayload(SuitActionPayload.RECALL));
 				}
 			}
 

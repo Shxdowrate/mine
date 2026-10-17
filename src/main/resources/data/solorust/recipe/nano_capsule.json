@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "solorust:suit_nano_helmet",
+    "solorust:suit_nano_chestplate",
+    "solorust:suit_nano_leggings",
+    "solorust:suit_nano_boots",
+    "minecraft:echo_shard"
+  ],
+  "result": {
+    "id": "solorust:nano_capsule"
+  }
+}

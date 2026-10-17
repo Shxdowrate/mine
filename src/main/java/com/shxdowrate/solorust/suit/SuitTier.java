@@ -65,7 +65,15 @@ public enum SuitTier {
 			2200, 12, true, 0.11f, 0.20f, 3.0f, 2,
 			List.of(REPULSOR, CHEST_BEAM, MICRO_MISSILES, CUTTING_LASER, FLARES, NANO_BLADE, NANO_SHIELD, NANO_CANNON, SCANNER),
 			new Stats(0.30, 6, 0.05, 0.0, 0.6, 1.0, 10, 64),
-			1.6f);
+			1.6f),
+
+	// Лёгкий костюм из кейса: слабая броня, зато разворачивается за секунду где угодно.
+	LIGHT("light", 0xFF7FFFD4,
+			armor(2, 4, 5, 2, 1.0f, 0.0f, SoundEvents.ARMOR_EQUIP_IRON),
+			350, 4, false, 0f, 0f, 0f, 0,
+			List.of(REPULSOR, SCANNER),
+			new Stats(0.10, 2, 0.08, 0.0, 0.5, 0.0, 0, 6),
+			0.8f);
 
 	/**
 	 * Бонусы полного комплекта.

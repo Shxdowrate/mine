@@ -110,7 +110,7 @@ public final class HelmetHud {
 	/** Дальность подсветки мобов. */
 	public static double entityRange(SuitTier tier) {
 		return switch (tier) {
-			case MK1 -> 16;
+			case MK1, LIGHT -> 16;
 			case MK2 -> 32;
 			case MK3 -> 48;
 			case TITAN -> 40;
@@ -121,7 +121,7 @@ public final class HelmetHud {
 	/** Радиус сканирования блоков. */
 	public static int blockRange(SuitTier tier) {
 		return switch (tier) {
-			case MK1 -> 8;
+			case MK1, LIGHT -> 8;
 			case MK2 -> 12;
 			case MK3 -> 18;
 			case TITAN -> 16;

@@ -3,6 +3,7 @@ package com.shxdowrate.solorust.registry;
 import com.shxdowrate.solorust.SoloRust;
 import com.shxdowrate.solorust.item.GunItem;
 import com.shxdowrate.solorust.suit.SuitArmorItem;
+import com.shxdowrate.solorust.suit.SuitContainerItem;
 import com.shxdowrate.solorust.suit.SuitTier;
 
 import net.minecraft.core.Registry;
@@ -28,9 +29,9 @@ public final class ModCreativeTab {
 				.title(Component.translatable("itemGroup.solorust.main"))
 				.icon(() -> new ItemStack(ModBlocks.SULFUR_NODE))
 				.displayItems((context, entries) -> {
-					ModBlocks.BLOCK_ITEMS.forEach(entries::accept);
+					ModBlocks.BLOCK_ITEMS.stream().filter(i -> i != ModBlocks.item(ModBlocks.SUIT_STATION)).forEach(entries::accept);
 					for (var item : ModItems.ITEMS) {
-						if (item instanceof SuitArmorItem || item == ModSuits.POWER_CORE) {
+						if (item instanceof SuitArmorItem || item instanceof SuitContainerItem || item == ModSuits.POWER_CORE) {
 							continue;
 						}
 
@@ -51,6 +52,8 @@ public final class ModCreativeTab {
 				.icon(() -> new ItemStack(ModSuits.piece(SuitTier.MK3, ArmorType.HELMET)))
 				.displayItems((context, entries) -> {
 					entries.accept(ModSuits.POWER_CORE);
+					entries.accept(ModBlocks.item(ModBlocks.SUIT_STATION));
+					ModSuits.CONTAINERS.values().forEach(entries::accept);
 					ModSuits.ALL_ARMOR.forEach(entries::accept);
 				})
 				.build());
