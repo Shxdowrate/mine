@@ -10,6 +10,9 @@ import com.shxdowrate.solorust.registry.ModSounds;
 import com.shxdowrate.solorust.registry.ModBlocks;
 import com.shxdowrate.solorust.registry.ModCreativeTab;
 import com.shxdowrate.solorust.registry.ModItems;
+import com.shxdowrate.solorust.registry.ModSuits;
+import com.shxdowrate.solorust.suit.SuitManager;
+import com.shxdowrate.solorust.suit.SuitProjectiles;
 import com.shxdowrate.solorust.registry.ModWorldgen;
 import com.shxdowrate.solorust.mechanics.VeinMiner;
 
@@ -31,6 +34,7 @@ public class SoloRust implements ModInitializer {
 		ModBlocks.init();
 		ModBlockEntities.init();
 		ModItems.init();
+		ModSuits.init();
 		Blueprints.init();
 		ModNetworking.init();
 		ReloadSounds.init();
@@ -38,6 +42,8 @@ public class SoloRust implements ModInitializer {
 		ModCreativeTab.init();
 		ModWorldgen.init();
 		VeinMiner.init();
+		SuitManager.init();
+		SuitProjectiles.init();
 
 		LOGGER.info("Solo Rust loaded");
 	}

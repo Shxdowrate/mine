@@ -22,6 +22,10 @@ public final class ModComponents {
 	public static final DataComponentType<GunMods> MODS = Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE, SoloRust.id("mods"),
 			DataComponentType.<GunMods>builder().persistent(GunMods.CODEC).networkSynchronized(GunMods.STREAM_CODEC).ignoreSwapAnimation().build());
 
+	/** Заряд энергоядра силовой брони (хранится на нагруднике). */
+	public static final DataComponentType<Integer> SUIT_ENERGY = Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE, SoloRust.id("suit_energy"),
+			DataComponentType.<Integer>builder().persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT).build());
+
 	private ModComponents() {
 	}
 

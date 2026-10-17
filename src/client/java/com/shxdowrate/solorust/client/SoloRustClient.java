@@ -52,6 +52,8 @@ public class SoloRustClient implements ClientModInitializer {
 
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CROSSHAIR, SoloRust.id("scope"), GunHud::scope);
 		HudElementRegistry.attachElementAfter(VanillaHudElements.HOTBAR, SoloRust.id("ammo"), GunHud::ammo);
+
+		SuitClient.init();
 	}
 
 	public static boolean holdsGun(LocalPlayer player) {

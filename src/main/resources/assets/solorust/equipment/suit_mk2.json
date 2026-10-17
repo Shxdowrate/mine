@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "solorust:suit_mk2"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "solorust:suit_mk2"
+      }
+    ]
+  }
+}
