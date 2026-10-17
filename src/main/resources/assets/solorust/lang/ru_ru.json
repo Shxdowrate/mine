@@ -1,0 +1,11 @@
+{
+  "itemGroup.solorust.main": "Соло Раст",
+  "block.solorust.stone_node": "Каменная глыба",
+  "item.solorust.stone_node": "Каменная глыба",
+  "block.solorust.metal_node": "Металлическая глыба",
+  "item.solorust.metal_node": "Металлическая глыба",
+  "block.solorust.sulfur_node": "Серная глыба",
+  "item.solorust.sulfur_node": "Серная глыба",
+  "item.solorust.sulfur_ore": "Серная руда",
+  "item.solorust.sulfur": "Сера"
+}

@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "solorust:stone_node",
+    "solorust:metal_node",
+    "solorust:sulfur_node"
+  ]
+}

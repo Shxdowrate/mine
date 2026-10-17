@@ -1,0 +1,30 @@
+{
+	"schemaVersion": 1,
+	"id": "solorust",
+	"version": "${version}",
+	"name": "Solo Rust",
+	"description": "Rust-style survival for single player: resource nodes, roads with loot, scrap, recyclers, guns, quarries and turrets.",
+	"authors": [
+		"Shxdowrate"
+	],
+	"contact": {
+		"sources": "https://github.com/Shxdowrate/mine"
+	},
+	"license": "MIT",
+	"icon": "assets/solorust/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.shxdowrate.solorust.SoloRust"
+		],
+		"client": [
+			"com.shxdowrate.solorust.client.SoloRustClient"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~26.1",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}

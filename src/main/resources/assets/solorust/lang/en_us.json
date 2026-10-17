@@ -1,0 +1,11 @@
+{
+  "itemGroup.solorust.main": "Solo Rust",
+  "block.solorust.stone_node": "Stone Node",
+  "item.solorust.stone_node": "Stone Node",
+  "block.solorust.metal_node": "Metal Node",
+  "item.solorust.metal_node": "Metal Node",
+  "block.solorust.sulfur_node": "Sulfur Node",
+  "item.solorust.sulfur_node": "Sulfur Node",
+  "item.solorust.sulfur_ore": "Sulfur Ore",
+  "item.solorust.sulfur": "Sulfur"
+}
