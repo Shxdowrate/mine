@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.shxdowrate.solorust.block.NodeBlock;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
@@ -19,7 +21,7 @@ import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 
 /**
- * «Три тимбер»: ломаешь один блок бревна топором или руды киркой — ломается всё дерево / вся жила.
+ * «Три тимбер»: ломаешь один блок бревна топором или руды/валуна киркой — ломается всё дерево / жила / валун.
  * Зажми Shift, чтобы сломать только один блок.
  */
 public final class VeinMiner {
@@ -44,7 +46,7 @@ public final class VeinMiner {
 
 			ItemStack tool = player.getMainHandItem();
 			boolean isLog = state.is(BlockTags.LOGS) && tool.is(ItemTags.AXES);
-			boolean isOre = state.is(ConventionalBlockTags.ORES) && tool.is(ItemTags.PICKAXES);
+			boolean isOre = (state.is(ConventionalBlockTags.ORES) || state.getBlock() instanceof NodeBlock) && tool.is(ItemTags.PICKAXES);
 
 			if (!isLog && !isOre) {
 				return;

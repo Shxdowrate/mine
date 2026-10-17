@@ -1,5 +1,5 @@
 {
-  "feature": "solorust:stone_node",
+  "feature": "solorust:metal_boulder",
   "placement": [
     {
       "type": "minecraft:rarity_filter",

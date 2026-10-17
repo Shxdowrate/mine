@@ -1,11 +1,12 @@
 {
   "itemGroup.solorust.main": "Соло Раст",
-  "block.solorust.stone_node": "Каменная глыба",
-  "item.solorust.stone_node": "Каменная глыба",
-  "block.solorust.metal_node": "Металлическая глыба",
-  "item.solorust.metal_node": "Металлическая глыба",
-  "block.solorust.sulfur_node": "Серная глыба",
-  "item.solorust.sulfur_node": "Серная глыба",
+  "block.solorust.stone_node": "Каменный валун",
+  "item.solorust.stone_node": "Каменный валун",
+  "block.solorust.metal_node": "Металлический валун",
+  "item.solorust.metal_node": "Металлический валун",
+  "block.solorust.sulfur_node": "Серный валун",
+  "item.solorust.sulfur_node": "Серный валун",
   "item.solorust.sulfur_ore": "Серная руда",
-  "item.solorust.sulfur": "Сера"
+  "item.solorust.sulfur": "Сера",
+  "generator.solorust.rust": "Rust"
 }

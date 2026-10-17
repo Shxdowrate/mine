@@ -1,11 +1,12 @@
 {
   "itemGroup.solorust.main": "Solo Rust",
-  "block.solorust.stone_node": "Stone Node",
-  "item.solorust.stone_node": "Stone Node",
-  "block.solorust.metal_node": "Metal Node",
-  "item.solorust.metal_node": "Metal Node",
-  "block.solorust.sulfur_node": "Sulfur Node",
-  "item.solorust.sulfur_node": "Sulfur Node",
+  "block.solorust.stone_node": "Stone Boulder",
+  "item.solorust.stone_node": "Stone Boulder",
+  "block.solorust.metal_node": "Metal Ore Boulder",
+  "item.solorust.metal_node": "Metal Ore Boulder",
+  "block.solorust.sulfur_node": "Sulfur Ore Boulder",
+  "item.solorust.sulfur_node": "Sulfur Ore Boulder",
   "item.solorust.sulfur_ore": "Sulfur Ore",
-  "item.solorust.sulfur": "Sulfur"
+  "item.solorust.sulfur": "Sulfur",
+  "generator.solorust.rust": "Rust"
 }

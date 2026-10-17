@@ -33,10 +33,9 @@ public final class ModBlocks {
 	private static BlockBehaviour.Properties node(MapColor color) {
 		return BlockBehaviour.Properties.of()
 				.mapColor(color)
-				.strength(4.0f, 6.0f)
+				.strength(3.0f, 6.0f)
 				.requiresCorrectToolForDrops()
-				.sound(SoundType.STONE)
-				.noOcclusion();
+				.sound(SoundType.STONE);
 	}
 
 	private static <T extends Block> T register(String name, Function<BlockBehaviour.Properties, T> factory, BlockBehaviour.Properties properties) {
