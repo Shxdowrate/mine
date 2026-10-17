@@ -1,6 +1,7 @@
 package com.shxdowrate.solorust.client;
 
 import com.shxdowrate.solorust.SoloRust;
+import com.shxdowrate.solorust.client.helmet.HelmetHud;
 import com.shxdowrate.solorust.suit.SuitEnergy;
 import com.shxdowrate.solorust.suit.SuitTier;
 import com.shxdowrate.solorust.suit.SuitWeapon;
@@ -81,6 +82,17 @@ public final class SuitClient {
 
 		int w = graphics.guiWidth();
 		int h = graphics.guiHeight();
+		int cx = w / 2;
+		int cy = h / 2;
+
+		if (HelmetHud.active()) {
+			visorFrame(graphics, tier, w, h, cx, cy);
+		}
+
+		chargeBar(graphics, player, tier, cx, cy);
+	}
+
+	private static void visorFrame(GuiGraphicsExtractor graphics, SuitTier tier, int w, int h, int cx, int cy) {
 		int c = (tier.hudColor & 0x00FFFFFF) | 0x70000000;
 		int len = 28;
 		int m = 6;
@@ -96,8 +108,6 @@ public final class SuitClient {
 		graphics.fill(w - m - 1, h - m - len, w - m, h - m, c);
 
 		// Прицельная рамка вокруг перекрестья.
-		int cx = w / 2;
-		int cy = h / 2;
 		int r = 9;
 		int cc = (tier.hudColor & 0x00FFFFFF) | 0x90000000;
 		graphics.fill(cx - r, cy - r, cx - r + 3, cy - r + 1, cc);
@@ -108,8 +118,10 @@ public final class SuitClient {
 		graphics.fill(cx - r, cy + r - 3, cx - r + 1, cy + r, cc);
 		graphics.fill(cx + r - 3, cy + r - 1, cx + r, cy + r, cc);
 		graphics.fill(cx + r - 1, cy + r - 3, cx + r, cy + r, cc);
+	}
 
-		// Шкала заряда для заряжаемого оружия.
+	/** Шкала заряда для заряжаемого оружия. */
+	private static void chargeBar(GuiGraphicsExtractor graphics, LocalPlayer player, SuitTier tier, int cx, int cy) {
 		ItemStack using = player.getUseItem();
 
 		if (player.isUsingItem() && using.getItem() instanceof SuitWeaponItem item && item.weapon().mode == SuitWeapon.Mode.CHARGE) {
