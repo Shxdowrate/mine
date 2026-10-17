@@ -20,6 +20,13 @@ PALETTES = {
     "mk3": dict(base=(42, 84, 172), dark=(20, 38, 92), accent=(226, 232, 242), glow=(80, 222, 255), style="panels"),
     "titan": dict(base=(228, 128, 32), dark=(38, 38, 44), accent=(250, 210, 40), glow=(255, 224, 80), style="hazard"),
     "light": dict(base=(214, 220, 222), dark=(46, 60, 66), accent=(64, 196, 170), glow=(127, 255, 212), style="panels"),
+    "singularity": dict(base=(26, 24, 52), dark=(8, 8, 20), accent=(230, 190, 80), glow=(255, 214, 107), style="stars"),
+    "archmage": dict(base=(28, 84, 64), dark=(14, 40, 32), accent=(214, 170, 70), glow=(255, 179, 71), style="cloth"),
+    "apex": dict(base=(38, 38, 42), dark=(14, 14, 16), accent=(190, 196, 204), glow=(242, 242, 242), style="plain"),
+    "miner": dict(base=(230, 190, 40), dark=(40, 40, 44), accent=(64, 64, 70), glow=(255, 240, 180), style="hazard"),
+    "builder": dict(base=(240, 130, 50), dark=(60, 60, 64), accent=(235, 235, 235), glow=(255, 210, 120), style="panels"),
+    "diver": dict(base=(30, 90, 110), dark=(12, 40, 52), accent=(200, 220, 210), glow=(79, 227, 193), style="panels"),
+    "scout": dict(base=(70, 92, 58), dark=(30, 40, 26), accent=(110, 130, 80), glow=(143, 209, 107), style="camo"),
     "nano": dict(base=(32, 32, 40), dark=(14, 14, 20), accent=(72, 60, 96), glow=(184, 112, 255), style="circuit"),
 }
 
@@ -88,6 +95,22 @@ def surface(p, seed):
             if (x * 7 + y * 13) % 11 == 0:
                 c = mix(base, glow, 0.55)
             elif y % 5 == 2 and x % 3 != 0:
+                c = shade(accent, n)
+        elif style == "stars":
+            if rnd.random() < 0.06:
+                c = (255, 255, 230) if rnd.random() < 0.5 else glow
+            elif (x + y) % 7 == 0:
+                c = mix(base, accent, 0.25)
+        elif style == "cloth":
+            if y % 3 == 0:
+                c = shade(base, 0.88)
+            if x in (0, 1) or x in (w - 2, w - 1):
+                c = shade(accent, n)
+        elif style == "camo":
+            v = (x * 3 + y * 5 + (x * y) % 7) % 11
+            if v < 3:
+                c = shade(dark, n * 1.3)
+            elif v < 5:
                 c = shade(accent, n)
         elif style == "plain":
             if (x + y) % 9 == 0:
@@ -653,6 +676,167 @@ def block_textures():
     cv.save(os.path.join(blk, "titan_pod_top.png"))
 
 
+def icon_canvas():
+    return Canvas(16, 16)
+
+
+def disc(cv, cx, cy, r, c, ring=None):
+    for y in range(16):
+        for x in range(16):
+            d = ((x + 0.5 - cx) ** 2 + (y + 0.5 - cy) ** 2) ** 0.5
+            if d <= r:
+                cv.set(x, y, c)
+            elif ring and d <= r + 1:
+                cv.set(x, y, ring)
+
+
+def seg(cv, x0, y0, x1, y1, c):
+    n = max(abs(x1 - x0), abs(y1 - y0), 1)
+    for i in range(n + 1):
+        cv.set(round(x0 + (x1 - x0) * i / n), round(y0 + (y1 - y0) * i / n), c)
+
+
+def core_icon(color, inner):
+    cv = icon_canvas()
+    disc(cv, 8, 8, 6, (30, 28, 50), (230, 190, 80))
+    disc(cv, 8, 8, 4, color)
+    disc(cv, 8, 8, 1.6, inner)
+    return cv
+
+
+def ability_icons():
+    W = (255, 255, 255)
+    icons = {}
+    # Ядра «Сингулярности»: одна палитра, разные символы.
+    G = (127, 227, 255)
+    cv = core_icon((20, 40, 70), (20, 40, 70))
+    for x in (6, 10):
+        seg(cv, x, 5, x, 10, G); cv.set(x - 1, 9, G); cv.set(x + 1, 9, G)
+    icons["gravity_grip"] = cv
+    cv = core_icon((20, 40, 70), (20, 40, 70))
+    seg(cv, 5, 5, 11, 5, G); seg(cv, 5, 11, 11, 11, G); seg(cv, 5, 5, 11, 11, G); seg(cv, 11, 5, 5, 11, G)
+    icons["time_dilation"] = cv
+    cv = core_icon((20, 40, 70), (20, 40, 70))
+    seg(cv, 8, 4, 12, 8, G); seg(cv, 12, 8, 8, 12, G); seg(cv, 8, 12, 4, 8, G); seg(cv, 4, 8, 8, 4, G)
+    icons["space_jump"] = cv
+    cv = core_icon((20, 40, 70), (20, 40, 70))
+    for x in range(5, 11):
+        cv.set(x, 5, G); cv.set(x, 10, G)
+    for y in range(5, 11):
+        cv.set(5, y, G); cv.set(10, y, G)
+    icons["matter_shift"] = cv
+    cv = core_icon((20, 40, 70), (20, 40, 70))
+    seg(cv, 4, 8, 6, 6, G); seg(cv, 6, 6, 10, 6, G); seg(cv, 10, 6, 12, 8, G); seg(cv, 4, 8, 6, 10, G); seg(cv, 6, 10, 10, 10, G); seg(cv, 10, 10, 12, 8, G)
+    disc(cv, 8, 8, 1, G)
+    icons["mind_link"] = cv
+    cv = core_icon((20, 40, 70), (20, 40, 70))
+    seg(cv, 8, 4, 8, 12, G); seg(cv, 4, 8, 12, 8, G); seg(cv, 7, 4, 7, 12, G); seg(cv, 4, 7, 12, 7, G)
+    icons["life_surge"] = cv
+    cv = icon_canvas()
+    disc(cv, 8, 8, 6.5, (10, 10, 16), (255, 214, 107))
+    for a in range(8):
+        import math
+        seg(cv, 8, 8, round(8 + math.cos(a * math.pi / 4) * 6), round(8 + math.sin(a * math.pi / 4) * 6), (255, 240, 200))
+    disc(cv, 8, 8, 2, W)
+    icons["collapse"] = cv
+    # маг
+    cv = icon_canvas()
+    seg(cv, 2, 13, 13, 2, (255, 179, 71)); seg(cv, 3, 13, 14, 2, (255, 220, 150)); disc(cv, 13, 3, 1.6, W)
+    icons["mystic_bolt"] = cv
+    cv = icon_canvas()
+    for y in range(16):
+        for x in range(16):
+            d = (((x + 0.5 - 8) / 5) ** 2 + ((y + 0.5 - 8) / 7) ** 2) ** 0.5
+            if 0.75 <= d <= 1.0:
+                cv.set(x, y, (255, 140, 26) if (x + y) % 2 else (255, 200, 90))
+    icons["portal"] = cv
+    cv = icon_canvas()
+    disc(cv, 8, 8, 6, (90, 60, 10), (255, 179, 71))
+    disc(cv, 8, 8, 3, (255, 179, 71))
+    seg(cv, 8, 2, 8, 14, (255, 230, 170)); seg(cv, 2, 8, 14, 8, (255, 230, 170))
+    icons["rune_shield"] = cv
+    cv = icon_canvas()
+    disc(cv, 8, 5, 3, (120, 220, 255)); seg(cv, 8, 8, 8, 13, (120, 220, 255)); seg(cv, 5, 10, 11, 10, (120, 220, 255))
+    seg(cv, 8, 13, 5, 15, (120, 220, 255)); seg(cv, 8, 13, 11, 15, (120, 220, 255))
+    icons["astral_form"] = cv
+    cv = icon_canvas()
+    disc(cv, 8, 8, 6, (30, 60, 40), (255, 179, 71))
+    seg(cv, 8, 8, 8, 4, W); seg(cv, 8, 8, 11, 9, W)
+    seg(cv, 2, 4, 4, 2, (255, 179, 71))
+    icons["time_loop"] = cv
+    # апекс
+    cv = icon_canvas()
+    disc(cv, 5, 6, 1.6, (255, 60, 30)); disc(cv, 11, 6, 1.6, (255, 60, 30))
+    seg(cv, 5, 7, 2, 15, (255, 80, 40)); seg(cv, 11, 7, 14, 15, (255, 80, 40))
+    icons["heat_vision"] = cv
+    cv = icon_canvas()
+    for r in (3, 5, 7):
+        for y in range(16):
+            for x in range(16):
+                d = ((x - 2) ** 2 + (y - 8) ** 2) ** 0.5
+                if abs(d - r * 1.6) < 0.6 and x > 3:
+                    cv.set(x, y, (220, 230, 255))
+    disc(cv, 2, 8, 1.8, W)
+    icons["sonic_clap"] = cv
+    cv = icon_canvas()
+    for x, y in [(4, 6), (6, 5), (8, 5), (10, 6), (4, 7), (11, 7), (4, 8), (11, 8), (5, 9), (10, 9), (6, 10), (9, 10), (6, 11), (9, 11)]:
+        cv.set(x, y, (230, 200, 170))
+    seg(cv, 5, 6, 5, 4, (230, 200, 170)); seg(cv, 7, 5, 7, 3, (230, 200, 170)); seg(cv, 9, 5, 9, 3, (230, 200, 170))
+    icons["super_grab"] = cv
+    # рабочие
+    cv = icon_canvas()
+    for i in range(6):
+        seg(cv, 3 + i, 12 - i, 6 + i, 12 - i, (200, 200, 210) if i % 2 else (150, 150, 160))
+    seg(cv, 2, 13, 4, 11, (255, 210, 60)); disc(cv, 12, 4, 1.5, (255, 240, 180))
+    icons["drill"] = cv
+    cv = icon_canvas()
+    for x in range(16):
+        y = 8 + round(4 * __import__("math").sin(x * 1.1)) * (1 if 3 < x < 13 else 0)
+        cv.set(x, y, (255, 210, 60))
+    disc(cv, 8, 13, 1.5, (92, 242, 255))
+    icons["seismic"] = cv
+    cv = icon_canvas()
+    disc(cv, 8, 8, 3, (255, 250, 210), (255, 220, 120))
+    for d in [(0, -6), (0, 6), (-6, 0), (6, 0), (-4, -4), (4, 4), (-4, 4), (4, -4)]:
+        cv.set(8 + d[0], 8 + d[1], (255, 240, 180))
+    icons["light_flare"] = cv
+    brick = (190, 100, 70)
+    cv = icon_canvas()
+    for y in range(4, 13):
+        for x in range(2, 14):
+            cv.set(x, y, (120, 60, 40) if (y % 3 == 0 or (x + (y // 3) * 2) % 4 == 0) else brick)
+    icons["build_wall"] = cv
+    cv = icon_canvas()
+    for x in range(1, 15):
+        cv.set(x, 10, brick); cv.set(x, 11, (120, 60, 40))
+    for x in (3, 12):
+        seg(cv, x, 12, x, 15, (120, 120, 130))
+    seg(cv, 2, 7, 13, 7, (255, 138, 61)); cv.set(12, 6, (255, 138, 61)); cv.set(12, 8, (255, 138, 61))
+    icons["build_bridge"] = cv
+    cv = icon_canvas()
+    for y in range(6, 12):
+        for x in range(1 + (11 - y), 15 - (11 - y) // 2):
+            cv.set(x, y, brick if (x + y) % 3 else (120, 60, 40))
+    icons["build_floor"] = cv
+    cv = icon_canvas()
+    for x, y in [(3, 3), (6, 4), (11, 3), (4, 9), (12, 10), (8, 12), (2, 13), (13, 6)]:
+        cv.set(x, y, brick); cv.set(x + 1, y, (120, 60, 40))
+    disc(cv, 8, 8, 2.5, (255, 200, 80))
+    icons["demolish"] = cv
+    cv = icon_canvas()
+    for y in range(16):
+        for x in range(16):
+            if (x + y) % 3 == 0 and abs(x - 8) + abs(y - 8) < 8:
+                cv.set(x, y, (143, 209, 107))
+    disc(cv, 6, 7, 1, W); disc(cv, 10, 7, 1, W)
+    icons["cloak"] = cv
+    cv = icon_canvas()
+    seg(cv, 2, 14, 12, 4, (180, 180, 190)); seg(cv, 12, 4, 14, 2, (220, 220, 230)); seg(cv, 12, 4, 10, 2, (220, 220, 230)); seg(cv, 12, 4, 14, 6, (220, 220, 230))
+    icons["grapple"] = cv
+    for name, cv in icons.items():
+        cv.save(os.path.join(ITEM, f"suit_{name}.png"))
+
+
 def main():
     for name, p in PALETTES.items():
         humanoid(name, p)
@@ -668,6 +852,7 @@ def main():
         draw_icon(rows, colors, os.path.join(ITEM, f"{name}.png"))
 
     block_textures()
+    ability_icons()
     print("ok")
 
 
