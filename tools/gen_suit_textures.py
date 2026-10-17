@@ -27,6 +27,7 @@ PALETTES = {
     "builder": dict(base=(240, 130, 50), dark=(60, 60, 64), accent=(235, 235, 235), glow=(255, 210, 120), style="panels"),
     "diver": dict(base=(30, 90, 110), dark=(12, 40, 52), accent=(200, 220, 210), glow=(79, 227, 193), style="panels"),
     "scout": dict(base=(70, 92, 58), dark=(30, 40, 26), accent=(110, 130, 80), glow=(143, 209, 107), style="camo"),
+    "chaos": dict(base=(26, 18, 22), dark=(8, 4, 6), accent=(120, 14, 36), glow=(255, 46, 77), style="cracks"),
     "nano": dict(base=(32, 32, 40), dark=(14, 14, 20), accent=(72, 60, 96), glow=(184, 112, 255), style="circuit"),
 }
 
@@ -112,6 +113,10 @@ def surface(p, seed):
                 c = shade(dark, n * 1.3)
             elif v < 5:
                 c = shade(accent, n)
+        elif style == "cracks":
+            # Тёмная броня с раскалёнными трещинами.
+            if (x * 5 + y * 3) % 13 == 0 or (x + 2 * y) % 17 == 0:
+                c = mix(accent, glow, rnd.uniform(0.2, 0.8))
         elif style == "plain":
             if (x + y) % 9 == 0:
                 c = shade(base, 1.08)
@@ -833,6 +838,55 @@ def ability_icons():
     cv = icon_canvas()
     seg(cv, 2, 14, 12, 4, (180, 180, 190)); seg(cv, 12, 4, 14, 2, (220, 220, 230)); seg(cv, 12, 4, 10, 2, (220, 220, 230)); seg(cv, 12, 4, 14, 6, (220, 220, 230))
     icons["grapple"] = cv
+    R, D, V = (255, 46, 77), (60, 6, 18), (138, 43, 226)
+    import math
+    cv = icon_canvas()
+    seg(cv, 2, 13, 13, 2, R); seg(cv, 3, 13, 14, 2, D); disc(cv, 13, 3, 1.6, (255, 160, 170))
+    icons["chaos_bolt"] = cv
+    cv = icon_canvas()
+    pts = [(2, 12), (6, 5), (9, 11), (13, 3)]
+    for a, b in zip(pts, pts[1:]):
+        seg(cv, a[0], a[1], b[0], b[1], R)
+    for p_ in pts:
+        disc(cv, p_[0], p_[1], 1.2, (255, 160, 170))
+    icons["chaos_chain"] = cv
+    cv = icon_canvas()
+    for r_ in (4, 7, 10):
+        for a in range(-40, 41, 8):
+            x = round(2 + math.cos(math.radians(a)) * r_); y = round(8 + math.sin(math.radians(a)) * r_)
+            cv.set(x, y, R if r_ != 7 else D)
+    icons["chaos_wave"] = cv
+    cv = icon_canvas()
+    for i in range(60):
+        t = i / 60.0
+        a = t * math.pi * 5
+        rr = 1 + t * 6
+        cv.set(round(8 + math.cos(a) * rr), round(14 - t * 12), R if i % 2 else D)
+    icons["chaos_vortex"] = cv
+    cv = icon_canvas()
+    for x0, y0 in [(3, 2), (8, 1), (12, 4)]:
+        seg(cv, x0, y0, x0 + 3, y0 + 7, D); disc(cv, x0 + 3.5, y0 + 8, 1.6, R)
+    seg(cv, 1, 15, 15, 15, (90, 60, 50))
+    icons["chaos_meteors"] = cv
+    cv = icon_canvas()
+    for y in range(2, 15):
+        x = 8 + round(math.sin(y * 0.9) * 2)
+        cv.set(x, y, R); cv.set(x + 1, y, D)
+    icons["chaos_rift"] = cv
+    cv = icon_canvas()
+    disc(cv, 8, 8, 6, (40, 8, 16), R); disc(cv, 8, 8, 2.5, R)
+    icons["chaos_sphere"] = cv
+    cv = icon_canvas()
+    disc(cv, 8, 6, 4, (30, 10, 40), V)
+    cv.set(6, 6, R); cv.set(10, 6, R); seg(cv, 6, 9, 10, 9, V)
+    seg(cv, 6, 11, 6, 14, V); seg(cv, 10, 11, 10, 14, V)
+    icons["chaos_curse"] = cv
+    cv = icon_canvas()
+    disc(cv, 8, 8, 7, D, R)
+    for a in range(12):
+        seg(cv, 8, 8, round(8 + math.cos(a * math.pi / 6) * 7), round(8 + math.sin(a * math.pi / 6) * 7), R)
+    disc(cv, 8, 8, 2.2, (255, 220, 220))
+    icons["chaos_blast"] = cv
     for name, cv in icons.items():
         cv.save(os.path.join(ITEM, f"suit_{name}.png"))
 
