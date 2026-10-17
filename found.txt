@@ -1,0 +1,2 @@
+/home/runner/work/mine/mine/.gradle/loom-cache/minecraftMaven/net/minecraft/minecraft-common-a26c9a9f3c/26.1/minecraft-common-a26c9a9f3c-26.1-sources.jar
+/home/runner/work/mine/mine/.gradle/loom-cache/minecraftMaven/net/minecraft/minecraft-clientOnly-a26c9a9f3c/26.1/minecraft-clientOnly-a26c9a9f3c-26.1-sources.jar
