@@ -65,6 +65,7 @@ public final class SuitManager {
 	private static final Set<UUID> WAS_FLYING = new HashSet<>();
 	/** Высота, с которой падает Титан (для ударной волны при приземлении). */
 	private static final Map<UUID, Double> FALLING = new HashMap<>();
+	private static final Map<UUID, Double> LAST_Y = new HashMap<>();
 	private static final Set<UUID> WARNED_FULL = new HashSet<>();
 
 	private SuitManager() {
@@ -100,6 +101,7 @@ public final class SuitManager {
 		FLIGHT.remove(id);
 		WAS_FLYING.remove(id);
 		FALLING.remove(id);
+		LAST_Y.remove(id);
 		WARNED_FULL.remove(id);
 		SuitWeapons.forget(id);
 	}
@@ -450,9 +452,19 @@ public final class SuitManager {
 
 		UUID id = player.getUUID();
 
+		double y = player.getY();
+		Double lastY = LAST_Y.put(id, y);
+
 		if (!player.onGround()) {
-			if (player.fallDistance > 0) {
-				FALLING.merge(id, player.fallDistance, Math::max);
+			// Высоту копим по фактическому снижению: так ударная волна работает и после пике в полёте,
+			// где fallDistance всегда обнулён. Набор высоты сбрасывает накопленное.
+			double dy = lastY == null ? 0 : y - lastY;
+
+			// Медленный спуск в полёте не считается — только падение или пике.
+			if (dy < -0.25) {
+				FALLING.merge(id, -dy, Double::sum);
+			} else if (dy > 0.05) {
+				FALLING.remove(id);
 			}
 
 			return;
