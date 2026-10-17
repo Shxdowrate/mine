@@ -84,7 +84,7 @@ public final class ModSuits {
 		return switch (tier) {
 			case MK1, LIGHT -> Rarity.UNCOMMON;
 			case MK2, MK3, MINER, BUILDER, DIVER, SCOUT -> Rarity.RARE;
-			case TITAN, NANO, SINGULARITY, ARCHMAGE, APEX -> Rarity.EPIC;
+			case TITAN, NANO, SINGULARITY, ARCHMAGE, APEX, CHAOS -> Rarity.EPIC;
 		};
 	}
 

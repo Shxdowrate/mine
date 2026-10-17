@@ -16,6 +16,7 @@ import com.shxdowrate.solorust.suit.SuitProjectiles;
 import com.shxdowrate.solorust.suit.SuitAssembly;
 import com.shxdowrate.solorust.suit.SuitActions;
 import com.shxdowrate.solorust.suit.SuitAbilities;
+import com.shxdowrate.solorust.suit.ChaosAbilities;
 import com.shxdowrate.solorust.suit.TitanDrop;
 import com.shxdowrate.solorust.registry.ModWorldgen;
 import com.shxdowrate.solorust.mechanics.VeinMiner;
@@ -52,6 +53,7 @@ public class SoloRust implements ModInitializer {
 		TitanDrop.init();
 		SuitActions.init();
 		SuitAbilities.init();
+		ChaosAbilities.init();
 
 		LOGGER.info("Solo Rust loaded");
 	}

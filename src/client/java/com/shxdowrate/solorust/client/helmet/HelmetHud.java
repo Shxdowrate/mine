@@ -114,7 +114,7 @@ public final class HelmetHud {
 			case MK2, MINER, DIVER -> 32;
 			case MK3, ARCHMAGE, SCOUT -> 48;
 			case TITAN -> 40;
-			case NANO, APEX -> 64;
+			case NANO, APEX, CHAOS -> 64;
 			case SINGULARITY -> 96;
 		};
 	}
@@ -126,7 +126,7 @@ public final class HelmetHud {
 			case MK2, BUILDER, APEX -> 12;
 			case MK3, ARCHMAGE, DIVER -> 18;
 			case TITAN -> 16;
-			case NANO, SINGULARITY -> 24;
+			case NANO, SINGULARITY, CHAOS -> 24;
 			case MINER -> 32;
 		};
 	}

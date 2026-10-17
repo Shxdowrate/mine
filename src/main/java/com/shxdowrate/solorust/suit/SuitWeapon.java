@@ -57,7 +57,18 @@ public enum SuitWeapon {
 	BUILD_FLOOR("build_floor", Mode.INSTANT, 25, 10, 0, 0),
 	DEMOLISH("demolish", Mode.INSTANT, 30, 10, 0, 0),
 	CLOAK("cloak", Mode.INSTANT, 150, 600, 0, 0),
-	GRAPPLE("grapple", Mode.INSTANT, 25, 14, 0, 0);
+	GRAPPLE("grapple", Mode.INSTANT, 25, 14, 0, 0),
+
+	// --- Костюм хаоса ---
+	CHAOS_BOLT("chaos_bolt", Mode.INSTANT, 10, 5, 0, 0),
+	CHAOS_CHAIN("chaos_chain", Mode.INSTANT, 70, 30, 0, 0),
+	CHAOS_WAVE("chaos_wave", Mode.INSTANT, 220, 160, 0, 0),
+	CHAOS_VORTEX("chaos_vortex", Mode.INSTANT, 300, 400, 0, 0),
+	CHAOS_METEORS("chaos_meteors", Mode.INSTANT, 220, 200, 0, 0),
+	CHAOS_RIFT("chaos_rift", Mode.INSTANT, 60, 30, 0, 0),
+	CHAOS_SPHERE("chaos_sphere", Mode.HOLD, 2, 0, 0, 0),
+	CHAOS_CURSE("chaos_curse", Mode.INSTANT, 120, 200, 0, 0),
+	CHAOS_BLAST("chaos_blast", Mode.CHARGE, 1800, 1200, 40, 40);
 
 	public enum Mode {
 		INSTANT, HOLD, CHARGE

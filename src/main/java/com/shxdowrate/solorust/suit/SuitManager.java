@@ -104,6 +104,7 @@ public final class SuitManager {
 		LAST_Y.remove(id);
 		WARNED_FULL.remove(id);
 		SuitWeapons.forget(id);
+		ChaosAbilities.forget(id);
 	}
 
 	// ================================================================== тик
@@ -231,6 +232,7 @@ public final class SuitManager {
 			case SINGULARITY -> ParticleTypes.END_ROD;
 			case ARCHMAGE -> ParticleTypes.ENCHANT;
 			case APEX -> ParticleTypes.CLOUD;
+			case CHAOS -> ChaosAbilities.RED;
 			default -> ParticleTypes.FLAME;
 		};
 
@@ -345,7 +347,7 @@ public final class SuitManager {
 				refresh(player, MobEffects.WATER_BREATHING, 0);
 				refresh(player, MobEffects.FIRE_RESISTANCE, 0);
 			}
-			case TITAN, SINGULARITY -> refresh(player, MobEffects.FIRE_RESISTANCE, 0);
+			case TITAN, SINGULARITY, CHAOS -> refresh(player, MobEffects.FIRE_RESISTANCE, 0);
 			// «Апекс» почти неуязвим, пока сыт; голодный — обычный человек в костюме.
 			case APEX -> refresh(player, MobEffects.RESISTANCE, player.getFoodData().getFoodLevel() >= 14 ? 2 : 0);
 			case MINER -> refresh(player, MobEffects.HASTE, 1);
@@ -457,7 +459,7 @@ public final class SuitManager {
 		}
 
 		// Нанощит поглощает любой урон, кроме «неблокируемого» (пустота, /kill), пока есть энергия.
-		if (player.isUsingItem() && player.getUseItem().getItem() instanceof SuitWeaponItem item && (item.weapon() == SuitWeapon.NANO_SHIELD || item.weapon() == SuitWeapon.RUNE_SHIELD)
+		if (player.isUsingItem() && player.getUseItem().getItem() instanceof SuitWeaponItem item && (item.weapon() == SuitWeapon.NANO_SHIELD || item.weapon() == SuitWeapon.RUNE_SHIELD || item.weapon() == SuitWeapon.CHAOS_SPHERE)
 				&& !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
 			int cost = Math.max(4, Math.round(amount * 8));
 

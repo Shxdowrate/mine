@@ -126,7 +126,15 @@ public enum SuitTier {
 			800, 8, false, 0f, 0f, 0f, 0,
 			List.of(CLOAK, GRAPPLE, SCANNER),
 			new Stats(0.35, 2, 0.15, 0.0, 0.6, 0.0, 0, 16),
-			1.0f);
+			1.0f),
+
+	// Костюм хаоса: разрушение по площади — вихрь, волна и взрыв, который выжигает всё вокруг.
+	CHAOS("chaos", 0xFFFF2E4D,
+			armor(5, 9, 11, 5, 5.0f, 0.2f, SoundEvents.ARMOR_EQUIP_NETHERITE),
+			2600, 13, true, 0.10f, 0.2f, 3.0f, 2,
+			List.of(CHAOS_BOLT, CHAOS_CHAIN, CHAOS_WAVE, CHAOS_VORTEX, CHAOS_METEORS, CHAOS_RIFT, CHAOS_SPHERE, CHAOS_CURSE, CHAOS_BLAST, SCANNER),
+			new Stats(0.25, 7, 0.1, 0.0, 0.6, 1.0, 12, 64),
+			1.8f);
 
 	/**
 	 * Бонусы полного комплекта.

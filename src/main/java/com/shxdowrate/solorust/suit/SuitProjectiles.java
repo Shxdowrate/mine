@@ -29,7 +29,9 @@ public final class SuitProjectiles {
 		/** Микроракета: быстрая, самонаводящаяся. */
 		MISSILE(1.5, 0.22, 0.0, 120),
 		/** Тяжёлая ракета «Титана»: медленнее, мощнее, наводится. */
-		HEAVY(1.1, 0.12, 0.0, 140);
+		HEAVY(1.1, 0.12, 0.0, 140),
+		/** Метеор хаоса: падает с неба в заданную точку. */
+		METEOR(1.6, 0.0, 0.03, 120);
 
 		final double speed;
 		final double turn;
@@ -71,6 +73,7 @@ public final class SuitProjectiles {
 	}
 
 	private static final List<Missile> ACTIVE = new ArrayList<>();
+	private static final net.minecraft.core.particles.DustParticleOptions CHAOS = new net.minecraft.core.particles.DustParticleOptions(0xD4143C, 1.6f);
 
 	private SuitProjectiles() {
 	}
@@ -103,7 +106,10 @@ public final class SuitProjectiles {
 
 				if (m.delay == 0) {
 					// Вылетаем из той же точки костюма, где бы игрок сейчас ни был — залп не отстаёт в полёте.
-					m.pos = m.owner.position().add(m.rel);
+					if (m.kind != Kind.METEOR) {
+						m.pos = m.owner.position().add(m.rel);
+					}
+
 					m.level.playSound(null, m.pos.x, m.pos.y, m.pos.z, net.minecraft.sounds.SoundEvents.FIREWORK_ROCKET_LAUNCH,
 							net.minecraft.sounds.SoundSource.PLAYERS, 0.5f, 1.5f);
 				}
@@ -174,6 +180,11 @@ public final class SuitProjectiles {
 		Vec3 mid = from.add(to).scale(0.5);
 		m.level.sendParticles(ParticleTypes.FLAME, true, false, from.x, from.y, from.z, 1, 0.02, 0.02, 0.02, 0.0);
 		m.level.sendParticles(ParticleTypes.SMOKE, true, false, mid.x, mid.y, mid.z, m.kind == Kind.HEAVY ? 3 : 1, 0.05, 0.05, 0.05, 0.0);
+
+		if (m.kind == Kind.METEOR) {
+			m.level.sendParticles(CHAOS, true, false, from.x, from.y, from.z, 4, 0.25, 0.25, 0.25, 0.0);
+			m.level.sendParticles(ParticleTypes.LARGE_SMOKE, true, false, mid.x, mid.y, mid.z, 2, 0.2, 0.2, 0.2, 0.0);
+		}
 
 		if (m.kind == Kind.HEAVY) {
 			m.level.sendParticles(ParticleTypes.LARGE_SMOKE, true, false, from.x, from.y, from.z, 1, 0.05, 0.05, 0.05, 0.0);

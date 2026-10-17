@@ -66,6 +66,8 @@ public final class SuitWeapons {
 			case CHEST_BEAM -> sound(level, player, SoundEvents.WARDEN_SONIC_CHARGE, 1.0f, 1.3f);
 			case NANO_CANNON -> sound(level, player, SoundEvents.RESPAWN_ANCHOR_CHARGE, 1.0f, 0.8f);
 			case COLLAPSE -> sound(level, player, SoundEvents.BEACON_ACTIVATE, 1.5f, 0.5f);
+			case CHAOS_BLAST -> sound(level, player, SoundEvents.WARDEN_SONIC_CHARGE, 1.5f, 0.5f);
+			case CHAOS_SPHERE -> sound(level, player, SoundEvents.FIRECHARGE_USE, 0.8f, 0.5f);
 			case RUNE_SHIELD -> sound(level, player, SoundEvents.EVOKER_CAST_SPELL, 0.8f, 1.2f);
 			case HEAT_VISION -> sound(level, player, SoundEvents.FIRECHARGE_USE, 0.6f, 1.6f);
 			case DRILL -> sound(level, player, SoundEvents.GRINDSTONE_USE, 0.8f, 0.6f);
@@ -107,6 +109,14 @@ public final class SuitWeapons {
 			case BUILD_WALL, BUILD_BRIDGE, BUILD_FLOOR, DEMOLISH -> SuitAbilities.build(level, player, weapon);
 			case CLOAK -> SuitAbilities.cloak(level, player);
 			case GRAPPLE -> SuitAbilities.grapple(level, player);
+			case CHAOS_BOLT -> ChaosAbilities.bolt(level, player, tier);
+			case CHAOS_CHAIN -> ChaosAbilities.chain(level, player, tier);
+			case CHAOS_WAVE -> ChaosAbilities.wave(level, player, tier);
+			case CHAOS_VORTEX -> ChaosAbilities.vortex(level, player);
+			case CHAOS_METEORS -> ChaosAbilities.meteors(level, player, tier);
+			case CHAOS_RIFT -> ChaosAbilities.rift(level, player, tier);
+			case CHAOS_CURSE -> ChaosAbilities.curse(level, player);
+			case CHAOS_BLAST -> ChaosAbilities.blast(level, player, tier);
 			default -> {
 			}
 		}
@@ -122,6 +132,7 @@ public final class SuitWeapons {
 			case RUNE_SHIELD -> SuitAbilities.runeShield(level, player, ticks);
 			case HEAT_VISION -> SuitAbilities.heatVision(level, player, tier, ticks);
 			case DRILL -> SuitAbilities.drill(level, player, ticks);
+			case CHAOS_SPHERE -> ChaosAbilities.sphere(level, player, tier, ticks);
 			default -> {
 			}
 		}
@@ -143,6 +154,7 @@ public final class SuitWeapons {
 		ParticleOptions particle = switch (weapon) {
 			case NANO_CANNON -> ParticleTypes.SOUL_FIRE_FLAME;
 			case GRAVITY_GRIP, COLLAPSE -> ParticleTypes.REVERSE_PORTAL;
+			case CHAOS_BLAST -> ChaosAbilities.RED;
 			default -> ParticleTypes.END_ROD;
 		};
 

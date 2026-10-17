@@ -143,8 +143,8 @@ public class SuitWeaponItem extends Item {
 	@Override
 	public ItemUseAnimation getUseAnimation(ItemStack stack) {
 		return switch (weapon) {
-			case NANO_SHIELD, RUNE_SHIELD -> ItemUseAnimation.BLOCK;
-			case CHEST_BEAM, NANO_CANNON, COLLAPSE -> ItemUseAnimation.BOW;
+			case NANO_SHIELD, RUNE_SHIELD, CHAOS_SPHERE -> ItemUseAnimation.BLOCK;
+			case CHEST_BEAM, NANO_CANNON, COLLAPSE, CHAOS_BLAST -> ItemUseAnimation.BOW;
 			default -> ItemUseAnimation.NONE;
 		};
 	}
