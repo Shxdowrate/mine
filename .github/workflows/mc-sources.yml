@@ -23,14 +23,18 @@ jobs:
           chmod +x ./gradlew
           ./gradlew genSources --stacktrace
       - name: Push sources to mc-src branch
+        if: always()
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          JAR=$(find ~/.gradle/caches/fabric-loom -name "*-sources.jar" | grep -i minecraft | head -1)
-          echo "sources jar: $JAR"
           mkdir -p /tmp/src && cd /tmp/src
-          unzip -q "$JAR" 'net/minecraft/*' 'com/mojang/*' || unzip -q "$JAR"
-          find . -type f ! -name '*.java' -delete
+          find ~/.gradle "$GITHUB_WORKSPACE" -name "*.jar" 2>/dev/null | grep -i -E "minecraft|merged|common|client" > jars.txt || true
+          JAR=$(grep -i "sources" jars.txt | grep -i -E "minecraft" | head -1)
+          echo "sources jar: $JAR" | tee found.txt
+          if [ -n "$JAR" ]; then
+            unzip -q -o "$JAR" 'net/minecraft/*' 'com/mojang/*' || unzip -q -o "$JAR" || true
+            find . -type f -name '*.json' -delete || true
+          fi
           git init -q && git config user.name ci && git config user.email ci@users.noreply.github.com
-          git add -A && git commit -qm "Minecraft sources" 
+          git add -A && git commit -qm "Minecraft sources"
           git push -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}" HEAD:mc-src
