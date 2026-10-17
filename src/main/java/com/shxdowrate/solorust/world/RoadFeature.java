@@ -43,9 +43,6 @@ public class RoadFeature extends Feature<NoneFeatureConfiguration> {
 		RustWorld.HeightSampler sampler = RustWorld.sampler(generator, level, level.getLevel().getChunkSource().randomState(), level.getSeed());
 		List<RoadNetwork.Road> roads = RoadNetwork.roadsNear(minX, minZ, minX + 15, minZ + 15, sampler);
 
-		if (roads.isEmpty()) {
-			return false;
-		}
 
 		BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
 		boolean placed = false;
@@ -78,6 +75,11 @@ public class RoadFeature extends Feature<NoneFeatureConfiguration> {
 
 		for (RoadNetwork.Road road : roads) {
 			RoadsideProps.place(level, road, minX, minZ, sampler, context.random());
+		}
+
+		for (RoadNetwork.MonumentSite site : RoadNetwork.monumentsNear(minX, minZ, minX + 15, minZ + 15, sampler)) {
+			Monuments.place(level, site, minX, minZ, context.random());
+			placed = true;
 		}
 
 		return placed;

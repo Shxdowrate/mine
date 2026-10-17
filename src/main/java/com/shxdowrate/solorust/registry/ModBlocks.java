@@ -9,6 +9,7 @@ import com.shxdowrate.solorust.block.LootBarrelBlock;
 import com.shxdowrate.solorust.block.LootCrateBlock;
 import com.shxdowrate.solorust.block.NodeBlock;
 import com.shxdowrate.solorust.block.RecyclerBlock;
+import com.shxdowrate.solorust.block.ResearchTableBlock;
 import com.shxdowrate.solorust.block.WorkbenchBlock;
 
 import net.minecraft.core.Registry;
@@ -37,6 +38,11 @@ public final class ModBlocks {
 			.mapColor(MapColor.WOOD).strength(2.0f).sound(SoundType.WOOD));
 	public static final Block MILITARY_CRATE = register("military_crate", LootCrateBlock::new, BlockBehaviour.Properties.of()
 			.mapColor(MapColor.COLOR_GREEN).strength(3.0f).sound(SoundType.METAL));
+
+	public static final Block SUPPLY_DROP = register("supply_drop", LootCrateBlock::new, BlockBehaviour.Properties.of()
+			.mapColor(MapColor.COLOR_BLUE).strength(3.0f).sound(SoundType.METAL));
+	public static final Block RESEARCH_TABLE = register("research_table", ResearchTableBlock::new, BlockBehaviour.Properties.of()
+			.mapColor(MapColor.METAL).strength(2.5f).sound(SoundType.METAL));
 
 	public static final Block WORKBENCH_1 = register("workbench_1", p -> new WorkbenchBlock(p, 1), BlockBehaviour.Properties.of()
 			.mapColor(MapColor.WOOD).strength(2.5f).sound(SoundType.WOOD));

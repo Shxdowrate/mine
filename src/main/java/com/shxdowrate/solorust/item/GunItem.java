@@ -1,225 +1,179 @@
 package com.shxdowrate.solorust.item;
 
 import java.util.List;
-import java.util.function.Supplier;
+import java.util.function.Consumer;
 
-import net.minecraft.core.particles.BlockParticleOption;
-import net.minecraft.core.particles.ParticleTypes;
+import com.shxdowrate.solorust.gun.Attachment;
+import com.shxdowrate.solorust.gun.GunDef;
+import com.shxdowrate.solorust.gun.GunMods;
+import com.shxdowrate.solorust.gun.GunStats;
+import com.shxdowrate.solorust.registry.ModComponents;
+
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.world.SlotAccess;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ClickAction;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.item.ItemUseAnimation;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomModelData;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
 
 /**
- * Огнестрел: мгновенный выстрел лучом. Патроны берутся из инвентаря.
- * Автоматы стреляют очередью, пока зажата ПКМ (майн сам повторяет «использование» каждые 4 тика).
+ * Огнестрел. ЛКМ — выстрел (пакет с клиента, см. GunLogic), ПКМ — прицеливание (удержание «использования»),
+ * R — перезарядка. Модули ставятся как в Расте: возьми модуль курсором и кликни им по стволу в инвентаре;
+ * ПКМ по стволу пустым курсором снимает модуль.
  */
 public class GunItem extends Item {
-	/**
-	 * @param ammo     какие патроны ест
-	 * @param damage   урон одной пули/дробины (в полусердечках)
-	 * @param cooldown перезарядка между выстрелами, тики
-	 * @param range    дальность, блоки
-	 * @param pellets  сколько дробин за выстрел
-	 * @param spread   разброс, градусы
-	 * @param misfire  шанс осечки (для Эоки)
-	 */
-	public record Stats(Supplier<Item> ammo, float damage, int cooldown, double range, int pellets, float spread, float misfire) {
-	}
+	private final GunDef def;
 
-	private final Stats stats;
-
-	public GunItem(Properties properties, Stats stats) {
+	public GunItem(Properties properties, GunDef def) {
 		super(properties);
-		this.stats = stats;
+		this.def = def;
 	}
 
-	public Stats stats() {
-		return stats;
+	public GunDef def() {
+		return def;
 	}
+
+	// --- Прицеливание ---
 
 	@Override
 	public InteractionResult use(Level level, Player player, InteractionHand hand) {
-		ItemStack stack = player.getItemInHand(hand);
-
-		if (player.getCooldowns().isOnCooldown(stack)) {
-			return InteractionResult.FAIL;
+		if (hand != InteractionHand.MAIN_HAND) {
+			return InteractionResult.PASS;
 		}
 
-		if (level instanceof ServerLevel serverLevel) {
-			if (!hasAmmo(player)) {
-				serverLevel.playSound(null, player.getX(), player.getEyeY(), player.getZ(), SoundEvents.DISPENSER_FAIL, SoundSource.PLAYERS, 0.6f, 1.6f);
-				player.getCooldowns().addCooldown(stack, 10);
-
-				if (player instanceof ServerPlayer serverPlayer) {
-					serverPlayer.sendSystemMessage(Component.translatable("message.solorust.no_ammo", Component.translatable(stats.ammo().get().getDescriptionId())), true);
-				}
-
-				return InteractionResult.FAIL;
-			}
-
-			RandomSource random = player.getRandom();
-
-			if (stats.misfire() > 0 && random.nextFloat() < stats.misfire()) {
-				serverLevel.playSound(null, player.getX(), player.getEyeY(), player.getZ(), SoundEvents.FLINTANDSTEEL_USE, SoundSource.PLAYERS, 0.8f, 1.2f);
-				player.getCooldowns().addCooldown(stack, 8);
-				return InteractionResult.CONSUME;
-			}
-
-			consumeAmmo(player);
-			fire(serverLevel, player, random);
-			player.getCooldowns().addCooldown(stack, stats.cooldown());
-		}
-
+		player.startUsingItem(hand);
 		return InteractionResult.CONSUME;
 	}
 
-	private boolean hasAmmo(Player player) {
-		if (player.hasInfiniteMaterials()) {
+	@Override
+	public int getUseDuration(ItemStack itemStack, LivingEntity user) {
+		return 72000;
+	}
+
+	@Override
+	public ItemUseAnimation getUseAnimation(ItemStack itemStack) {
+		return ItemUseAnimation.NONE;
+	}
+
+	// --- Полоска патронов вместо полоски прочности ---
+
+	@Override
+	public boolean isBarVisible(ItemStack stack) {
+		return true;
+	}
+
+	@Override
+	public int getBarWidth(ItemStack stack) {
+		int mag = GunStats.magazine(def, GunStats.mods(stack));
+		int ammo = stack.getOrDefault(ModComponents.AMMO, 0);
+		return Math.round(13.0f * ammo / Math.max(1, mag));
+	}
+
+	@Override
+	public int getBarColor(ItemStack stack) {
+		return 0xE8C547;
+	}
+
+	@Override
+	public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag flag) {
+		int mag = GunStats.magazine(def, GunStats.mods(stack));
+		int ammo = stack.getOrDefault(ModComponents.AMMO, 0);
+		builder.accept(Component.translatable("tooltip.solorust.magazine", ammo, mag).withStyle(ChatFormatting.YELLOW));
+		builder.accept(Component.translatable(def.automatic() ? "tooltip.solorust.auto" : "tooltip.solorust.semi").withStyle(ChatFormatting.GRAY));
+
+		GunMods mods = GunStats.mods(stack);
+
+		for (Attachment a : mods.list()) {
+			builder.accept(Component.literal(" + ").withStyle(ChatFormatting.DARK_GREEN)
+					.append(Component.translatable("item.solorust." + a.id).withStyle(ChatFormatting.GREEN)));
+		}
+
+		if (def.mods()) {
+			builder.accept(Component.translatable("tooltip.solorust.mods_hint").withStyle(ChatFormatting.DARK_GRAY));
+		}
+	}
+
+	// --- Модули ---
+
+	@Override
+	public boolean overrideOtherStackedOnMe(ItemStack self, ItemStack other, Slot slot, ClickAction clickAction, Player player, SlotAccess carriedItem) {
+		if (!def.mods()) {
+			return false;
+		}
+
+		GunMods mods = GunStats.mods(self);
+
+		if (clickAction == ClickAction.PRIMARY && other.getItem() instanceof AttachmentItem attachmentItem) {
+			Attachment attachment = attachmentItem.attachment();
+			String old = mods.get(attachment.slot);
+
+			if (old.equals(attachment.id)) {
+				return false;
+			}
+
+			setMods(self, mods.with(attachment.slot, attachment.id));
+			other.shrink(1);
+
+			if (!old.isEmpty()) {
+				ItemStack returned = attachmentStack(old);
+
+				if (other.isEmpty()) {
+					carriedItem.set(returned);
+				} else if (!player.getInventory().add(returned)) {
+					player.drop(returned, false);
+				}
+			}
+
+			player.playSound(SoundEvents.ARMOR_EQUIP_IRON.value(), 0.8f, 1.4f);
 			return true;
 		}
 
-		Item ammo = stats.ammo().get();
-		Inventory inventory = player.getInventory();
+		if (clickAction == ClickAction.SECONDARY && other.isEmpty() && !mods.isEmpty()) {
+			for (Attachment.Slot attachmentSlot : Attachment.Slot.values()) {
+				String id = mods.get(attachmentSlot);
 
-		for (int i = 0; i < inventory.getContainerSize(); i++) {
-			if (inventory.getItem(i).is(ammo)) {
-				return true;
+				if (!id.isEmpty()) {
+					setMods(self, mods.with(attachmentSlot, ""));
+					carriedItem.set(attachmentStack(id));
+					player.playSound(SoundEvents.ARMOR_EQUIP_CHAIN.value(), 0.8f, 1.2f);
+					return true;
+				}
 			}
 		}
 
 		return false;
 	}
 
-	private void consumeAmmo(Player player) {
-		if (player.hasInfiniteMaterials()) {
-			return;
-		}
+	public static void setMods(ItemStack stack, GunMods mods) {
+		stack.set(ModComponents.MODS, mods);
+		stack.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(List.of(), List.of(), mods.modelStrings(), List.of()));
 
-		Item ammo = stats.ammo().get();
-		Inventory inventory = player.getInventory();
+		// Если магазин стал меньше (сняли расширенный) — лишние патроны просто срезаются до нового размера.
+		if (stack.getItem() instanceof GunItem gun) {
+			int mag = GunStats.magazine(gun.def, mods);
 
-		for (int i = 0; i < inventory.getContainerSize(); i++) {
-			ItemStack slot = inventory.getItem(i);
-
-			if (slot.is(ammo)) {
-				slot.shrink(1);
-				return;
+			if (stack.getOrDefault(ModComponents.AMMO, 0) > mag) {
+				stack.set(ModComponents.AMMO, mag);
 			}
 		}
 	}
 
-	private void fire(ServerLevel level, Player player, RandomSource random) {
-		Vec3 eye = player.getEyePosition();
-		Vec3 look = player.getViewVector(1.0f);
-
-		for (int p = 0; p < stats.pellets(); p++) {
-			Vec3 dir = spread(look, stats.spread(), random);
-			Vec3 end = eye.add(dir.scale(stats.range()));
-
-			BlockHitResult blockHit = level.clip(new ClipContext(eye, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player));
-			Vec3 limit = blockHit.getType() == HitResult.Type.MISS ? end : blockHit.getLocation();
-
-			Entity target = null;
-			Vec3 targetPoint = null;
-			double best = eye.distanceToSqr(limit);
-			List<Entity> candidates = level.getEntities(player, new AABB(eye, limit).inflate(1.0),
-					e -> e instanceof LivingEntity && e.isAlive() && !e.isSpectator());
-
-			for (Entity entity : candidates) {
-				var hit = entity.getBoundingBox().inflate(0.15).clip(eye, limit);
-
-				if (hit.isPresent()) {
-					double d = eye.distanceToSqr(hit.get());
-
-					if (d < best) {
-						best = d;
-						target = entity;
-						targetPoint = hit.get();
-					}
-				}
-			}
-
-			Vec3 impact = targetPoint != null ? targetPoint : limit;
-			tracer(level, eye.add(dir.scale(1.2)), impact);
-
-			if (target != null) {
-				float damage = stats.damage();
-
-				// Хедшот: попадание выше уровня глаз минус чуть-чуть — урон x1.5.
-				if (targetPoint.y >= target.getEyeY() - 0.2) {
-					damage *= 1.5f;
-					level.sendParticles(ParticleTypes.CRIT, targetPoint.x, targetPoint.y, targetPoint.z, 6, 0.1, 0.1, 0.1, 0.2);
-				}
-
-				target.invulnerableTime = 0;
-				target.hurtServer(level, level.damageSources().playerAttack(player), damage);
-				level.sendParticles(ParticleTypes.DAMAGE_INDICATOR, targetPoint.x, targetPoint.y, targetPoint.z, 2, 0.1, 0.1, 0.1, 0.05);
-			} else if (blockHit.getType() == HitResult.Type.BLOCK) {
-				BlockState state = level.getBlockState(blockHit.getBlockPos());
-
-				if (!state.isAir()) {
-					level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, state), impact.x, impact.y, impact.z, 6, 0.05, 0.05, 0.05, 0.1);
-				}
-			}
-		}
-
-		Vec3 muzzle = eye.add(look.scale(1.0));
-		level.sendParticles(ParticleTypes.SMOKE, muzzle.x, muzzle.y - 0.1, muzzle.z, 3, 0.03, 0.03, 0.03, 0.01);
-		level.playSound(null, player.getX(), player.getEyeY(), player.getZ(), SoundEvents.FIREWORK_ROCKET_BLAST, SoundSource.PLAYERS,
-				1.2f, pitch());
-	}
-
-	private float pitch() {
-		if (stats.damage() >= 20) {
-			return 0.5f;
-		}
-
-		if (stats.pellets() > 1) {
-			return 0.6f;
-		}
-
-		return stats.cooldown() <= 3 ? 1.3f : 0.9f;
-	}
-
-	private static Vec3 spread(Vec3 look, float degrees, RandomSource random) {
-		if (degrees <= 0) {
-			return look;
-		}
-
-		double rad = Math.toRadians(degrees);
-		double yawOffset = random.nextGaussian() * rad * 0.5;
-		double pitchOffset = random.nextGaussian() * rad * 0.5;
-		Vec3 rotated = look.yRot((float) yawOffset).xRot((float) pitchOffset);
-		return rotated.normalize();
-	}
-
-	private static void tracer(ServerLevel level, Vec3 from, Vec3 to) {
-		Vec3 delta = to.subtract(from);
-		double length = delta.length();
-		int steps = Mth.clamp((int) (length / 2.0), 1, 40);
-
-		for (int i = 0; i < steps; i++) {
-			Vec3 point = from.add(delta.scale(i / (double) steps));
-			level.sendParticles(ParticleTypes.ELECTRIC_SPARK, point.x, point.y, point.z, 1, 0, 0, 0, 0);
-		}
+	private static ItemStack attachmentStack(String id) {
+		Item item = BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("solorust", id));
+		return new ItemStack(item);
 	}
 }

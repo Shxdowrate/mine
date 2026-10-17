@@ -3,6 +3,7 @@ package com.shxdowrate.solorust.menu;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.shxdowrate.solorust.mechanics.Blueprints;
 import com.shxdowrate.solorust.mechanics.WorkbenchRecipes;
 
 import net.minecraft.ChatFormatting;
@@ -20,6 +21,7 @@ import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemLore;
 
@@ -28,7 +30,7 @@ import net.minecraft.world.item.component.ItemLore;
  * в верхних слотах лежат «витринные» предметы с ценой в описании, клик по ним — скрафтить.
  */
 public class WorkbenchMenu extends ChestMenu {
-	private static final int ROWS = 3;
+	private static final int ROWS = 6;
 
 	private final Container catalog;
 	private final List<WorkbenchRecipes.Recipe> recipes;
@@ -39,19 +41,28 @@ public class WorkbenchMenu extends ChestMenu {
 	}
 
 	private WorkbenchMenu(int containerId, Inventory inventory, SimpleContainer catalog, List<WorkbenchRecipes.Recipe> recipes, BlockPos pos) {
-		super(MenuType.GENERIC_9x3, containerId, inventory, catalog, ROWS);
+		super(MenuType.GENERIC_9x6, containerId, inventory, catalog, ROWS);
 		this.catalog = catalog;
 		this.recipes = recipes;
 		this.pos = pos;
 
 		for (int i = 0; i < recipes.size() && i < catalog.getContainerSize(); i++) {
-			catalog.setItem(i, display(recipes.get(i)));
+			catalog.setItem(i, display(recipes.get(i), inventory.player));
 		}
 	}
 
-	private static ItemStack display(WorkbenchRecipes.Recipe recipe) {
+	private static ItemStack display(WorkbenchRecipes.Recipe recipe, Player player) {
 		ItemStack stack = recipe.resultStack();
 		List<Component> lines = new ArrayList<>();
+		Item result = recipe.result().asItem();
+
+		if (!Blueprints.knows(player, result)) {
+			lines.add(Component.translatable("tooltip.solorust.locked").withStyle(ChatFormatting.RED));
+			lines.add(Component.translatable("tooltip.solorust.research_at_table", Blueprints.researchCost(result)).withStyle(ChatFormatting.GRAY));
+			stack.set(DataComponents.LORE, new ItemLore(lines));
+			return stack;
+		}
+
 		lines.add(Component.translatable("tooltip.solorust.cost").withStyle(ChatFormatting.GOLD));
 
 		for (WorkbenchRecipes.Cost cost : recipe.costs()) {
@@ -97,6 +108,12 @@ public class WorkbenchMenu extends ChestMenu {
 	private void craft(ServerPlayer player, WorkbenchRecipes.Recipe recipe) {
 		Inventory inventory = player.getInventory();
 		boolean free = player.hasInfiniteMaterials();
+
+		if (!Blueprints.knows(player, recipe.result().asItem())) {
+			player.sendSystemMessage(Component.translatable("message.solorust.need_blueprint").withStyle(ChatFormatting.RED), true);
+			player.level().playSound(null, pos, SoundEvents.VILLAGER_NO, SoundSource.BLOCKS, 0.5f, 1.0f);
+			return;
+		}
 
 		if (!free) {
 			for (WorkbenchRecipes.Cost cost : recipe.costs()) {

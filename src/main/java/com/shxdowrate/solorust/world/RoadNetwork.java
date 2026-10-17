@@ -272,6 +272,126 @@ public final class RoadNetwork {
 		return list;
 	}
 
+	// ------------------------------------------------------------------ монументы на перекрёстках
+
+	public enum MonumentType { GAS_STATION, SUPERMARKET, WAREHOUSE }
+
+	/**
+	 * Монумент у перекрёстка. (x0, z0) — угол площадки, width — вдоль фасада, depth — вглубь;
+	 * front — сторона света, куда смотрит фасад (0=север -Z, 1=юг +Z, 2=запад -X, 3=восток +X).
+	 */
+	public record MonumentSite(MonumentType type, int x0, int z0, int width, int depth, int front, int floorY, long seed) {
+		public int sizeX() {
+			return front <= 1 ? width : depth;
+		}
+
+		public int sizeZ() {
+			return front <= 1 ? depth : width;
+		}
+	}
+
+	private static final Map<Long, Optional<MonumentSite>> MONUMENTS = new ConcurrentHashMap<>();
+
+	private static Optional<MonumentSite> monument(int cx, int cz, RustWorld.HeightSampler sampler) {
+		long key = RustWorld.mix(sampler.seed() ^ 0x4D4F4EL, cx, cz);
+
+		if (MONUMENTS.size() > 20_000) {
+			MONUMENTS.clear();
+		}
+
+		Optional<MonumentSite> cached = MONUMENTS.get(key);
+
+		if (cached != null) {
+			return cached;
+		}
+
+		Optional<MonumentSite> result = Optional.empty();
+		Optional<Node> nodeOpt = node(cx, cz, sampler);
+		int roll = (int) Math.floorMod(key, 100);
+		MonumentType type = roll < 30 ? MonumentType.GAS_STATION : roll < 52 ? MonumentType.SUPERMARKET : roll < 72 ? MonumentType.WAREHOUSE : null;
+
+		if (nodeOpt.isPresent() && type != null) {
+			Node node = nodeOpt.get();
+			List<Double> angles = new ArrayList<>();
+			road(cx, cz, 0, sampler).ifPresent(r -> angles.add(Math.atan2(r.mz - r.az, r.mx - r.ax)));
+			road(cx, cz, 1, sampler).ifPresent(r -> angles.add(Math.atan2(r.mz - r.az, r.mx - r.ax)));
+			road(cx - 1, cz, 0, sampler).ifPresent(r -> angles.add(Math.atan2(r.mz - r.bz, r.mx - r.bx)));
+			road(cx, cz - 1, 1, sampler).ifPresent(r -> angles.add(Math.atan2(r.mz - r.bz, r.mx - r.bx)));
+
+			if (!angles.isEmpty()) {
+				// Ставим монумент в ту «четверть» между дорогами, где до ближайшей дороги дальше всего.
+				double bestAngle = 0;
+				double bestGap = -1;
+
+				for (int q = 0; q < 4; q++) {
+					double a = Math.PI / 4 + q * Math.PI / 2;
+					double gap = Double.MAX_VALUE;
+
+					for (double r : angles) {
+						double d = Math.abs(Math.atan2(Math.sin(a - r), Math.cos(a - r)));
+						gap = Math.min(gap, d);
+					}
+
+					if (gap > bestGap) {
+						bestGap = gap;
+						bestAngle = a;
+					}
+				}
+
+				int width = switch (type) {
+					case GAS_STATION -> 20;
+					case SUPERMARKET -> 22;
+					case WAREHOUSE -> 22;
+				};
+				int depth = switch (type) {
+					case GAS_STATION -> 16;
+					case SUPERMARKET -> 16;
+					case WAREHOUSE -> 18;
+				};
+
+				double dist = 30;
+				int centerX = (int) Math.round(node.x() + Math.cos(bestAngle) * dist);
+				int centerZ = (int) Math.round(node.z() + Math.sin(bestAngle) * dist);
+
+				// Фасад смотрит в сторону перекрёстка (по преобладающей оси).
+				double toNodeX = node.x() - centerX;
+				double toNodeZ = node.z() - centerZ;
+				int front = Math.abs(toNodeX) > Math.abs(toNodeZ) ? (toNodeX < 0 ? 2 : 3) : (toNodeZ < 0 ? 0 : 1);
+				int sizeX = front <= 1 ? width : depth;
+				int sizeZ = front <= 1 ? depth : width;
+				int floorY = Math.round(node.height()) - 1;
+
+				result = Optional.of(new MonumentSite(type, centerX - sizeX / 2, centerZ - sizeZ / 2, width, depth, front, floorY, key));
+			}
+		}
+
+		MONUMENTS.put(key, result);
+		return result;
+	}
+
+	/** Монументы, площадка которых (с запасом) задевает прямоугольник. */
+	public static List<MonumentSite> monumentsNear(int minX, int minZ, int maxX, int maxZ, RustWorld.HeightSampler sampler) {
+		List<MonumentSite> list = new ArrayList<>();
+		int cx0 = Math.floorDiv(minX, CELL) - 1;
+		int cx1 = Math.floorDiv(maxX, CELL) + 1;
+		int cz0 = Math.floorDiv(minZ, CELL) - 1;
+		int cz1 = Math.floorDiv(maxZ, CELL) + 1;
+
+		for (int cx = cx0; cx <= cx1; cx++) {
+			for (int cz = cz0; cz <= cz1; cz++) {
+				monument(cx, cz, sampler).ifPresent(m -> {
+					int pad = 4;
+
+					if (m.x0() - pad <= maxX && m.x0() + m.sizeX() + pad >= minX && m.z0() - pad <= maxZ && m.z0() + m.sizeZ() + pad >= minZ) {
+						list.add(m);
+					}
+				});
+			}
+		}
+
+		return list;
+	}
+
 	/** Точка спавна прямо на дороге, ближайшей к центру мира. */
 	public static BlockPos findSpawn(RustWorld.HeightSampler sampler) {
 		Road best = null;

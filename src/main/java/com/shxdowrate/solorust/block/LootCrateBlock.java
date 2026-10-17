@@ -30,6 +30,10 @@ public class LootCrateBlock extends BaseEntityBlock {
 	@Override
 	public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
 		if (!level.isClientSide()) {
+			if (level.getBlockEntity(pos) instanceof LootCrateBlockEntity crate) {
+				crate.tryRespawn(level);
+			}
+
 			MenuProvider menu = state.getMenuProvider(level, pos);
 
 			if (menu != null) {

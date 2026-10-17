@@ -1,13 +1,13 @@
 package com.shxdowrate.solorust.world;
 
 import com.shxdowrate.solorust.SoloRust;
+import com.shxdowrate.solorust.block.entity.LootCrateBlockEntity;
 import com.shxdowrate.solorust.registry.ModBlocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.RandomizableContainer;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -23,6 +23,7 @@ public final class RoadsideProps {
 
 	public static final ResourceKey<LootTable> CRATE_LOOT = ResourceKey.create(Registries.LOOT_TABLE, SoloRust.id("chests/loot_crate"));
 	public static final ResourceKey<LootTable> MILITARY_LOOT = ResourceKey.create(Registries.LOOT_TABLE, SoloRust.id("chests/military_crate"));
+	public static final ResourceKey<LootTable> SUPPLY_LOOT = ResourceKey.create(Registries.LOOT_TABLE, SoloRust.id("chests/supply_drop"));
 
 	private enum Kind { BARRELS, CAR, CRATE, MILITARY }
 
@@ -83,7 +84,7 @@ public final class RoadsideProps {
 		}
 	}
 
-	private record Ctx(WorldGenLevel level, int minX, int minZ, long hash) {
+	record Ctx(WorldGenLevel level, int minX, int minZ, long hash) {
 		boolean inside(int x, int z) {
 			return x >= minX && x < minX + 16 && z >= minZ && z < minZ + 16;
 		}
@@ -119,7 +120,7 @@ public final class RoadsideProps {
 		}
 	}
 
-	private static void barrels(Ctx ctx, int x, int y, int z, long h) {
+	static void barrels(Ctx ctx, int x, int y, int z, long h) {
 		int count = 1 + (int) Math.floorMod(h >>> 16, 3);
 		int[][] offsets = {{0, 0}, {1, 0}, {0, 1}};
 
@@ -130,17 +131,24 @@ public final class RoadsideProps {
 		}
 	}
 
-	private static void crate(Ctx ctx, int x, int y, int z, BlockState state, ResourceKey<LootTable> loot, RandomSource random) {
+	static void crate(Ctx ctx, int x, int y, int z, BlockState state, ResourceKey<LootTable> loot, RandomSource random) {
 		if (!ctx.inside(x, z)) {
 			return;
 		}
 
 		ctx.ground(x, y, z, state);
-		RandomizableContainer.setBlockEntityLootTable(ctx.level(), random, new BlockPos(x, y, z), loot);
+		fillCrate(ctx.level(), new BlockPos(x, y, z), loot, random);
+	}
+
+	/** Назначает ящику таблицу лута с респавном. */
+	public static void fillCrate(WorldGenLevel level, BlockPos pos, ResourceKey<LootTable> loot, RandomSource random) {
+		if (level.getBlockEntity(pos) instanceof LootCrateBlockEntity crate) {
+			crate.setRespawningLoot(loot, random.nextLong());
+		}
 	}
 
 	/** Ржавая легковушка 5×3: колёса, кузов, кабина со стеклом и крыша. */
-	private static void car(Ctx ctx, int cx, int y, int cz, boolean alongX, int front, RandomSource random) {
+	static void car(Ctx ctx, int cx, int y, int cz, boolean alongX, int front, RandomSource random) {
 		BlockState wheel = Blocks.COAL_BLOCK.defaultBlockState();
 		BlockState body = Blocks.WAXED_WEATHERED_CUT_COPPER.defaultBlockState();
 		BlockState rust = Blocks.WAXED_OXIDIZED_CUT_COPPER.defaultBlockState();

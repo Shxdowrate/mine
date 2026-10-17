@@ -1,0 +1,25 @@
+package com.shxdowrate.solorust.network;
+
+import com.shxdowrate.solorust.gun.GunLogic;
+
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+
+public final class ModNetworking {
+	private ModNetworking() {
+	}
+
+	public static void init() {
+		PayloadTypeRegistry.serverboundPlay().register(GunActionPayload.TYPE, GunActionPayload.CODEC);
+		PayloadTypeRegistry.clientboundPlay().register(RecoilPayload.TYPE, RecoilPayload.CODEC);
+
+		ServerPlayNetworking.registerGlobalReceiver(GunActionPayload.TYPE, (payload, context) -> {
+			switch (payload.action()) {
+				case GunActionPayload.FIRE -> GunLogic.fire(context.player());
+				case GunActionPayload.RELOAD -> GunLogic.reload(context.player());
+				default -> {
+				}
+			}
+		});
+	}
+}

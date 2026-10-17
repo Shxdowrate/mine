@@ -1,6 +1,12 @@
 package com.shxdowrate.solorust;
 
+import com.shxdowrate.solorust.gun.ReloadSounds;
+import com.shxdowrate.solorust.mechanics.Airdrops;
+import com.shxdowrate.solorust.mechanics.Blueprints;
+import com.shxdowrate.solorust.network.ModNetworking;
 import com.shxdowrate.solorust.registry.ModBlockEntities;
+import com.shxdowrate.solorust.registry.ModComponents;
+import com.shxdowrate.solorust.registry.ModSounds;
 import com.shxdowrate.solorust.registry.ModBlocks;
 import com.shxdowrate.solorust.registry.ModCreativeTab;
 import com.shxdowrate.solorust.registry.ModItems;
@@ -20,9 +26,15 @@ public class SoloRust implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ModComponents.init();
+		ModSounds.init();
 		ModBlocks.init();
 		ModBlockEntities.init();
 		ModItems.init();
+		Blueprints.init();
+		ModNetworking.init();
+		ReloadSounds.init();
+		Airdrops.init();
 		ModCreativeTab.init();
 		ModWorldgen.init();
 		VeinMiner.init();
