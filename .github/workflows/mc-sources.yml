@@ -1,0 +1,36 @@
+# Служебный: декомпилирует Minecraft и кладёт исходники в ветку mc-src (для сверки API при разработке).
+name: mc-sources
+
+on:
+  push:
+    branches: ["tools-mcsrc"]
+
+permissions:
+  contents: write
+
+jobs:
+  sources:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
+        with:
+          java-version: '25'
+          distribution: 'microsoft'
+      - uses: gradle/actions/setup-gradle@v6
+      - name: Decompile
+        run: |
+          chmod +x ./gradlew
+          ./gradlew genSources --stacktrace
+      - name: Push sources to mc-src branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          JAR=$(find ~/.gradle/caches/fabric-loom -name "*-sources.jar" | grep -i minecraft | head -1)
+          echo "sources jar: $JAR"
+          mkdir -p /tmp/src && cd /tmp/src
+          unzip -q "$JAR" 'net/minecraft/*' 'com/mojang/*' || unzip -q "$JAR"
+          find . -type f ! -name '*.java' -delete
+          git init -q && git config user.name ci && git config user.email ci@users.noreply.github.com
+          git add -A && git commit -qm "Minecraft sources" 
+          git push -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}" HEAD:mc-src

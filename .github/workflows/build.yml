@@ -2,7 +2,7 @@ name: build
 
 on:
   push:
-    branches: ["**"]
+    branches: ["main"]
     tags: ["v*"]
   pull_request:
   workflow_dispatch:
@@ -30,9 +30,21 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
 
       - name: Build
+        shell: bash
         run: |
           chmod +x ./gradlew
-          ./gradlew build --stacktrace
+          ./gradlew build --stacktrace 2>&1 | tee build.log
+          exit ${PIPESTATUS[0]}
+
+      - name: Publish build log on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/logrepo && cp build.log /tmp/logrepo/ && cd /tmp/logrepo
+          git init -q && git config user.name ci && git config user.email ci@users.noreply.github.com
+          git add -A && git commit -qm "build log for $GITHUB_SHA"
+          git push -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}" HEAD:ci-logs
 
       - name: Upload mod jar
         uses: actions/upload-artifact@v7
