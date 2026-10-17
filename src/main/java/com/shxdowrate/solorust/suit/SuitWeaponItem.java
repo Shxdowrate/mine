@@ -44,7 +44,7 @@ public class SuitWeaponItem extends Item {
 
 		if (tier == null || !tier.has(weapon)) {
 			if (!level.isClientSide()) {
-				player.sendSystemMessage(Component.translatable("message.solorust.suit.offline").withStyle(ChatFormatting.RED), true);
+				player.sendOverlayMessage(Component.translatable("message.solorust.suit.offline").withStyle(ChatFormatting.RED));
 			}
 
 			return InteractionResult.FAIL;
@@ -149,7 +149,7 @@ public class SuitWeaponItem extends Item {
 
 	private static void noEnergy(Level level, Player player) {
 		if (!level.isClientSide()) {
-			player.sendSystemMessage(Component.translatable("message.solorust.suit.no_energy").withStyle(ChatFormatting.RED), true);
+			player.sendOverlayMessage(Component.translatable("message.solorust.suit.no_energy").withStyle(ChatFormatting.RED));
 		}
 	}
 
