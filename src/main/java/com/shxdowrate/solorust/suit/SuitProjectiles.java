@@ -139,7 +139,7 @@ public final class SuitProjectiles {
 		}
 
 		Vec3 next = m.pos.add(m.vel);
-		BlockHitResult block = level.clip(new ClipContext(m.pos, next, ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, m.owner));
+		BlockHitResult block = level.clip(new ClipContext(m.pos, next, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, m.owner));
 		Vec3 limit = block.getType() == HitResult.Type.MISS ? next : block.getLocation();
 
 		// Попадание в сущность.
