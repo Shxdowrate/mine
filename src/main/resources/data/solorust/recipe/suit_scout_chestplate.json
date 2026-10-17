@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "SMS",
+    "MPM",
+    "SMS"
+  ],
+  "key": {
+    "S": "minecraft:phantom_membrane",
+    "M": "minecraft:leather",
+    "P": "solorust:suit_mk1_chestplate"
+  },
+  "result": {
+    "id": "solorust:suit_scout_chestplate"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "SMS",
+    "MPM",
+    "SMS"
+  ],
+  "key": {
+    "S": "minecraft:ender_eye",
+    "M": "minecraft:diamond_block",
+    "P": "solorust:suit_nano_leggings"
+  },
+  "result": {
+    "id": "solorust:suit_singularity_leggings"
+  }
+}

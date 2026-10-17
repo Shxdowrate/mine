@@ -11,6 +11,8 @@
     "solorust:workbench_3",
     "solorust:recycler",
     "solorust:research_table",
-    "solorust:supply_drop"
+    "solorust:supply_drop",
+    "solorust:suit_station",
+    "solorust:titan_pod"
   ]
 }

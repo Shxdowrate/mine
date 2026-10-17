@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "solorust:block/titan_pod_side",
+    "end": "solorust:block/titan_pod_top"
+  }
+}

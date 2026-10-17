@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "SMS",
+    "MPM",
+    "SMS"
+  ],
+  "key": {
+    "S": "minecraft:gold_ingot",
+    "M": "minecraft:diamond",
+    "P": "solorust:suit_mk2_helmet"
+  },
+  "result": {
+    "id": "solorust:suit_mk3_helmet"
+  }
+}

@@ -2,11 +2,15 @@ package com.shxdowrate.solorust.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.shxdowrate.solorust.SoloRust;
+import com.shxdowrate.solorust.client.helmet.HelmetHud;
+import com.shxdowrate.solorust.client.helmet.HelmetScreen;
+import com.shxdowrate.solorust.client.helmet.HelmetSettings;
 import com.shxdowrate.solorust.gun.Attachment;
 import com.shxdowrate.solorust.gun.GunStats;
 import com.shxdowrate.solorust.item.GunItem;
 import com.shxdowrate.solorust.network.GunActionPayload;
 import com.shxdowrate.solorust.network.RecoilPayload;
+import com.shxdowrate.solorust.network.SuitActionPayload;
 import com.shxdowrate.solorust.registry.ModComponents;
 import com.shxdowrate.solorust.registry.ModSounds;
 
@@ -29,6 +33,14 @@ public class SoloRustClient implements ClientModInitializer {
 	private static final KeyMapping.Category CATEGORY = KeyMapping.Category.register(SoloRust.id("controls"));
 	public static final KeyMapping RELOAD = KeyMappingHelper.registerKeyMapping(
 			new KeyMapping("key.solorust.reload", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_R, CATEGORY));
+	public static final KeyMapping HELMET_TOGGLE = KeyMappingHelper.registerKeyMapping(
+			new KeyMapping("key.solorust.helmet_toggle", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_H, CATEGORY));
+	public static final KeyMapping SUIT_TOGGLE = KeyMappingHelper.registerKeyMapping(
+			new KeyMapping("key.solorust.suit_toggle", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_G, CATEGORY));
+	public static final KeyMapping SUIT_RECALL = KeyMappingHelper.registerKeyMapping(
+			new KeyMapping("key.solorust.suit_recall", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_V, CATEGORY));
+	public static final KeyMapping HELMET_MENU = KeyMappingHelper.registerKeyMapping(
+			new KeyMapping("key.solorust.helmet_menu", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_J, CATEGORY));
 
 	private static boolean wasAttackDown = false;
 	private static float pendingPitch = 0;
@@ -52,6 +64,37 @@ public class SoloRustClient implements ClientModInitializer {
 
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CROSSHAIR, SoloRust.id("scope"), GunHud::scope);
 		HudElementRegistry.attachElementAfter(VanillaHudElements.HOTBAR, SoloRust.id("ammo"), GunHud::ammo);
+
+		SuitClient.init();
+		HelmetSettings.load();
+		ClientTickEvents.END_CLIENT_TICK.register(client -> {
+			while (HELMET_TOGGLE.consumeClick()) {
+				if (client.player != null && HelmetHud.helmet(client.player) != null) {
+					HelmetHud.toggle();
+				}
+			}
+
+			while (SUIT_TOGGLE.consumeClick()) {
+				if (client.player != null) {
+					ClientPlayNetworking.send(new SuitActionPayload(SuitActionPayload.TOGGLE));
+				}
+			}
+
+			while (SUIT_RECALL.consumeClick()) {
+				if (client.player != null) {
+					ClientPlayNetworking.send(new SuitActionPayload(SuitActionPayload.RECALL));
+				}
+			}
+
+			while (HELMET_MENU.consumeClick()) {
+				if (client.player != null && client.screen == null) {
+					client.setScreen(new HelmetScreen());
+				}
+			}
+
+			HelmetHud.tick(client);
+		});
+		HudElementRegistry.attachElementBefore(VanillaHudElements.CROSSHAIR, SoloRust.id("helmet"), HelmetHud::render);
 	}
 
 	public static boolean holdsGun(LocalPlayer player) {
