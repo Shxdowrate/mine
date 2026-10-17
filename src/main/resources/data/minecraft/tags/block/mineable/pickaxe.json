@@ -9,6 +9,8 @@
     "solorust:military_crate",
     "solorust:workbench_2",
     "solorust:workbench_3",
-    "solorust:recycler"
+    "solorust:recycler",
+    "solorust:research_table",
+    "solorust:supply_drop"
   ]
 }

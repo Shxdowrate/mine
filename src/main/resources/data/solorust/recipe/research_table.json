@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SSS",
+    "IGI",
+    "PPP"
+  ],
+  "key": {
+    "S": "solorust:scrap",
+    "I": "minecraft:iron_ingot",
+    "G": "minecraft:glass",
+    "P": "#minecraft:planks"
+  },
+  "result": {
+    "id": "solorust:research_table"
+  }
+}

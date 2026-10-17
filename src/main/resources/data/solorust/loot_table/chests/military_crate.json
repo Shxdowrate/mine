@@ -97,6 +97,38 @@
               "add": false
             }
           ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:slug",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 2,
+                "max": 6
+              },
+              "add": false
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:buckshot",
+          "weight": 4,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4,
+                "max": 8
+              },
+              "add": false
+            }
+          ]
         }
       ]
     },
@@ -106,8 +138,13 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "solorust:semi_automatic_rifle",
+          "name": "solorust:p250",
           "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:python",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
@@ -116,17 +153,87 @@
         },
         {
           "type": "minecraft:item",
-          "name": "solorust:assault_rifle",
+          "name": "solorust:pump_shotgun",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:semi_automatic_rifle",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:holosight",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:silencer",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:muzzle_boost",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:muzzle_brake",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:laser_sight",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:extended_magazine",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:eoka_pistol",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:waterpipe_shotgun",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:revolver",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:nailgun",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:double_barrel_shotgun",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:custom_smg",
           "weight": 1
         },
         {
           "type": "minecraft:item",
-          "name": "solorust:bolt_action_rifle",
+          "name": "solorust:simple_sight",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:supply_signal",
           "weight": 1
         },
         {
           "type": "minecraft:empty",
-          "weight": 18
+          "weight": 20
         }
       ]
     }

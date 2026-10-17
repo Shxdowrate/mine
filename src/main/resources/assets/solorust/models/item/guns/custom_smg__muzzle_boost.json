@@ -1,0 +1,145 @@
+{
+ "parent": "solorust:item/gun_hold",
+ "textures": {
+  "p": "solorust:item/gun_palette",
+  "particle": "solorust:item/gun_palette"
+ },
+ "elements": [
+  {
+   "from": [
+    18,
+    8.0,
+    7.25
+   ],
+   "to": [
+    20.2,
+    9.5,
+    8.75
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      9,
+      1,
+      11,
+      3
+     ],
+     "texture": "#p"
+    },
+    "south": {
+     "uv": [
+      9,
+      1,
+      11,
+      3
+     ],
+     "texture": "#p"
+    },
+    "east": {
+     "uv": [
+      9,
+      1,
+      11,
+      3
+     ],
+     "texture": "#p"
+    },
+    "west": {
+     "uv": [
+      9,
+      1,
+      11,
+      3
+     ],
+     "texture": "#p"
+    },
+    "up": {
+     "uv": [
+      9,
+      1,
+      11,
+      3
+     ],
+     "texture": "#p"
+    },
+    "down": {
+     "uv": [
+      9,
+      1,
+      11,
+      3
+     ],
+     "texture": "#p"
+    }
+   }
+  },
+  {
+   "from": [
+    19.6,
+    7.85,
+    7.1
+   ],
+   "to": [
+    20.2,
+    9.65,
+    8.9
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      13,
+      1,
+      15,
+      3
+     ],
+     "texture": "#p"
+    },
+    "south": {
+     "uv": [
+      13,
+      1,
+      15,
+      3
+     ],
+     "texture": "#p"
+    },
+    "east": {
+     "uv": [
+      13,
+      1,
+      15,
+      3
+     ],
+     "texture": "#p"
+    },
+    "west": {
+     "uv": [
+      13,
+      1,
+      15,
+      3
+     ],
+     "texture": "#p"
+    },
+    "up": {
+     "uv": [
+      13,
+      1,
+      15,
+      3
+     ],
+     "texture": "#p"
+    },
+    "down": {
+     "uv": [
+      13,
+      1,
+      15,
+      3
+     ],
+     "texture": "#p"
+    }
+   }
+  }
+ ]
+}

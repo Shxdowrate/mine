@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "solorust:block/research_table_side",
+    "top": "solorust:block/research_table_top",
+    "bottom": "minecraft:block/iron_block"
+  }
+}

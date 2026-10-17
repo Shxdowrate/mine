@@ -1,6 +1,7 @@
 package com.shxdowrate.solorust.registry;
 
 import com.shxdowrate.solorust.SoloRust;
+import com.shxdowrate.solorust.item.GunItem;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -24,7 +25,16 @@ public final class ModCreativeTab {
 				.icon(() -> new ItemStack(ModBlocks.SULFUR_NODE))
 				.displayItems((context, entries) -> {
 					ModBlocks.BLOCK_ITEMS.forEach(entries::accept);
-					ModItems.ITEMS.forEach(entries::accept);
+					for (var item : ModItems.ITEMS) {
+						ItemStack stack = new ItemStack(item);
+
+						// В творческом оружие сразу заряжено.
+						if (item instanceof GunItem gun) {
+							stack.set(ModComponents.AMMO, gun.def().magazine());
+						}
+
+						entries.accept(stack);
+					}
 				})
 				.build());
 	}

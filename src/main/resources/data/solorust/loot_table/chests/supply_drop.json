@@ -1,0 +1,284 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "solorust:scrap",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 25,
+                "max": 50
+              },
+              "add": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 2,
+        "max": 3
+      },
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "solorust:assault_rifle",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:lr300",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:mp5",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:m92",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:m39_rifle",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:bolt_action_rifle",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:spas12_shotgun",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:prototype_17",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:scope_8x",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:scope_16x",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:l96_rifle",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:m249",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:m4_shotgun",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:p250",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:python",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:thompson",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:pump_shotgun",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:semi_automatic_rifle",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:holosight",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:silencer",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:muzzle_boost",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:muzzle_brake",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:laser_sight",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:extended_magazine",
+          "weight": 2
+        }
+      ]
+    },
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 3,
+        "max": 5
+      },
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "solorust:rifle_ammo",
+          "weight": 6,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 16,
+                "max": 32
+              },
+              "add": false
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:pistol_ammo",
+          "weight": 4,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 16,
+                "max": 32
+              },
+              "add": false
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:slug",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 6,
+                "max": 12
+              },
+              "add": false
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:buckshot",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 8,
+                "max": 16
+              },
+              "add": false
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:tech_trash",
+          "weight": 4,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 3
+              },
+              "add": false
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:rifle_body",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:metal_spring",
+          "weight": 4,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 2
+              },
+              "add": false
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:gold_ingot",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 2,
+                "max": 6
+              },
+              "add": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,212 @@
+{
+ "model": {
+  "type": "minecraft:condition",
+  "property": "minecraft:using_item",
+  "on_true": {
+   "type": "minecraft:select",
+   "property": "minecraft:custom_model_data",
+   "index": 0,
+   "cases": [
+    {
+     "when": [
+      "scope_8x",
+      "scope_16x"
+     ],
+     "model": {
+      "type": "minecraft:empty"
+     }
+    }
+   ],
+   "fallback": {
+    "type": "minecraft:composite",
+    "models": [
+     {
+      "type": "minecraft:model",
+      "model": "solorust:item/guns/custom_smg_aim"
+     },
+     {
+      "type": "minecraft:select",
+      "property": "minecraft:custom_model_data",
+      "index": 0,
+      "cases": [
+       {
+        "when": "holosight",
+        "model": {
+         "type": "minecraft:model",
+         "model": "solorust:item/guns/custom_smg__holosight_aim"
+        }
+       },
+       {
+        "when": "simple_sight",
+        "model": {
+         "type": "minecraft:model",
+         "model": "solorust:item/guns/custom_smg__simple_sight_aim"
+        }
+       },
+       {
+        "when": "scope_8x",
+        "model": {
+         "type": "minecraft:model",
+         "model": "solorust:item/guns/custom_smg__scope_8x_aim"
+        }
+       },
+       {
+        "when": "scope_16x",
+        "model": {
+         "type": "minecraft:model",
+         "model": "solorust:item/guns/custom_smg__scope_16x_aim"
+        }
+       }
+      ],
+      "fallback": {
+       "type": "minecraft:empty"
+      }
+     },
+     {
+      "type": "minecraft:select",
+      "property": "minecraft:custom_model_data",
+      "index": 1,
+      "cases": [
+       {
+        "when": "silencer",
+        "model": {
+         "type": "minecraft:model",
+         "model": "solorust:item/guns/custom_smg__silencer_aim"
+        }
+       },
+       {
+        "when": "muzzle_boost",
+        "model": {
+         "type": "minecraft:model",
+         "model": "solorust:item/guns/custom_smg__muzzle_boost_aim"
+        }
+       },
+       {
+        "when": "muzzle_brake",
+        "model": {
+         "type": "minecraft:model",
+         "model": "solorust:item/guns/custom_smg__muzzle_brake_aim"
+        }
+       }
+      ],
+      "fallback": {
+       "type": "minecraft:empty"
+      }
+     },
+     {
+      "type": "minecraft:select",
+      "property": "minecraft:custom_model_data",
+      "index": 2,
+      "cases": [
+       {
+        "when": "laser_sight",
+        "model": {
+         "type": "minecraft:model",
+         "model": "solorust:item/guns/custom_smg__laser_sight_aim"
+        }
+       }
+      ],
+      "fallback": {
+       "type": "minecraft:empty"
+      }
+     }
+    ]
+   }
+  },
+  "on_false": {
+   "type": "minecraft:composite",
+   "models": [
+    {
+     "type": "minecraft:model",
+     "model": "solorust:item/guns/custom_smg"
+    },
+    {
+     "type": "minecraft:select",
+     "property": "minecraft:custom_model_data",
+     "index": 0,
+     "cases": [
+      {
+       "when": "holosight",
+       "model": {
+        "type": "minecraft:model",
+        "model": "solorust:item/guns/custom_smg__holosight"
+       }
+      },
+      {
+       "when": "simple_sight",
+       "model": {
+        "type": "minecraft:model",
+        "model": "solorust:item/guns/custom_smg__simple_sight"
+       }
+      },
+      {
+       "when": "scope_8x",
+       "model": {
+        "type": "minecraft:model",
+        "model": "solorust:item/guns/custom_smg__scope_8x"
+       }
+      },
+      {
+       "when": "scope_16x",
+       "model": {
+        "type": "minecraft:model",
+        "model": "solorust:item/guns/custom_smg__scope_16x"
+       }
+      }
+     ],
+     "fallback": {
+      "type": "minecraft:empty"
+     }
+    },
+    {
+     "type": "minecraft:select",
+     "property": "minecraft:custom_model_data",
+     "index": 1,
+     "cases": [
+      {
+       "when": "silencer",
+       "model": {
+        "type": "minecraft:model",
+        "model": "solorust:item/guns/custom_smg__silencer"
+       }
+      },
+      {
+       "when": "muzzle_boost",
+       "model": {
+        "type": "minecraft:model",
+        "model": "solorust:item/guns/custom_smg__muzzle_boost"
+       }
+      },
+      {
+       "when": "muzzle_brake",
+       "model": {
+        "type": "minecraft:model",
+        "model": "solorust:item/guns/custom_smg__muzzle_brake"
+       }
+      }
+     ],
+     "fallback": {
+      "type": "minecraft:empty"
+     }
+    },
+    {
+     "type": "minecraft:select",
+     "property": "minecraft:custom_model_data",
+     "index": 2,
+     "cases": [
+      {
+       "when": "laser_sight",
+       "model": {
+        "type": "minecraft:model",
+        "model": "solorust:item/guns/custom_smg__laser_sight"
+       }
+      }
+     ],
+     "fallback": {
+      "type": "minecraft:empty"
+     }
+    }
+   ]
+  }
+ }
+}

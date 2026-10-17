@@ -1,0 +1,81 @@
+{
+  "gun.pistol": {
+    "sounds": [
+      "solorust:gun/pistol1",
+      "solorust:gun/pistol2",
+      "solorust:gun/pistol3"
+    ],
+    "subtitle": "subtitles.solorust.gun.pistol"
+  },
+  "gun.smg": {
+    "sounds": [
+      "solorust:gun/smg1",
+      "solorust:gun/smg2",
+      "solorust:gun/smg3"
+    ],
+    "subtitle": "subtitles.solorust.gun.smg"
+  },
+  "gun.rifle": {
+    "sounds": [
+      "solorust:gun/rifle1",
+      "solorust:gun/rifle2",
+      "solorust:gun/rifle3"
+    ],
+    "subtitle": "subtitles.solorust.gun.rifle"
+  },
+  "gun.sniper": {
+    "sounds": [
+      "solorust:gun/sniper1",
+      "solorust:gun/sniper2",
+      "solorust:gun/sniper3"
+    ],
+    "subtitle": "subtitles.solorust.gun.sniper"
+  },
+  "gun.shotgun": {
+    "sounds": [
+      "solorust:gun/shotgun1",
+      "solorust:gun/shotgun2",
+      "solorust:gun/shotgun3"
+    ],
+    "subtitle": "subtitles.solorust.gun.shotgun"
+  },
+  "gun.nail": {
+    "sounds": [
+      "solorust:gun/nail1",
+      "solorust:gun/nail2",
+      "solorust:gun/nail3"
+    ],
+    "subtitle": "subtitles.solorust.gun.nail"
+  },
+  "gun.silenced": {
+    "sounds": [
+      "solorust:gun/silenced1",
+      "solorust:gun/silenced2",
+      "solorust:gun/silenced3"
+    ],
+    "subtitle": "subtitles.solorust.gun.silenced"
+  },
+  "gun.dry": {
+    "sounds": [
+      "solorust:gun/dry"
+    ],
+    "subtitle": "subtitles.solorust.gun.dry"
+  },
+  "gun.reload": {
+    "sounds": [
+      "solorust:gun/reload"
+    ],
+    "subtitle": "subtitles.solorust.gun.reload"
+  },
+  "gun.reload_end": {
+    "sounds": [
+      "solorust:gun/reload_end"
+    ],
+    "subtitle": "subtitles.solorust.gun.reload"
+  },
+  "gun.hit": {
+    "sounds": [
+      "solorust:gun/hit"
+    ]
+  }
+}

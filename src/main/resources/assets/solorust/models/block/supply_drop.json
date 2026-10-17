@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "solorust:block/supply_drop_side",
+    "top": "solorust:block/supply_drop_top",
+    "bottom": "solorust:block/supply_drop_top"
+  }
+}
