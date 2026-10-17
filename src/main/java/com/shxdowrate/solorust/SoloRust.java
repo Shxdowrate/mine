@@ -1,5 +1,6 @@
 package com.shxdowrate.solorust;
 
+import com.shxdowrate.solorust.registry.ModBlockEntities;
 import com.shxdowrate.solorust.registry.ModBlocks;
 import com.shxdowrate.solorust.registry.ModCreativeTab;
 import com.shxdowrate.solorust.registry.ModItems;
@@ -20,6 +21,7 @@ public class SoloRust implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ModBlocks.init();
+		ModBlockEntities.init();
 		ModItems.init();
 		ModCreativeTab.init();
 		ModWorldgen.init();

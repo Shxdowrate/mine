@@ -5,7 +5,11 @@ import java.util.List;
 import java.util.function.Function;
 
 import com.shxdowrate.solorust.SoloRust;
+import com.shxdowrate.solorust.block.LootBarrelBlock;
+import com.shxdowrate.solorust.block.LootCrateBlock;
 import com.shxdowrate.solorust.block.NodeBlock;
+import com.shxdowrate.solorust.block.RecyclerBlock;
+import com.shxdowrate.solorust.block.WorkbenchBlock;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -27,6 +31,22 @@ public final class ModBlocks {
 	public static final Block METAL_NODE = register("metal_node", NodeBlock::new, node(MapColor.RAW_IRON));
 	public static final Block SULFUR_NODE = register("sulfur_node", NodeBlock::new, node(MapColor.COLOR_YELLOW));
 
+	public static final Block LOOT_BARREL = register("loot_barrel", LootBarrelBlock::new, barrel(MapColor.COLOR_BLUE));
+	public static final Block OIL_BARREL = register("oil_barrel", LootBarrelBlock::new, barrel(MapColor.COLOR_RED));
+	public static final Block LOOT_CRATE = register("loot_crate", LootCrateBlock::new, BlockBehaviour.Properties.of()
+			.mapColor(MapColor.WOOD).strength(2.0f).sound(SoundType.WOOD));
+	public static final Block MILITARY_CRATE = register("military_crate", LootCrateBlock::new, BlockBehaviour.Properties.of()
+			.mapColor(MapColor.COLOR_GREEN).strength(3.0f).sound(SoundType.METAL));
+
+	public static final Block WORKBENCH_1 = register("workbench_1", p -> new WorkbenchBlock(p, 1), BlockBehaviour.Properties.of()
+			.mapColor(MapColor.WOOD).strength(2.5f).sound(SoundType.WOOD));
+	public static final Block WORKBENCH_2 = register("workbench_2", p -> new WorkbenchBlock(p, 2), BlockBehaviour.Properties.of()
+			.mapColor(MapColor.METAL).strength(3.5f).sound(SoundType.METAL));
+	public static final Block WORKBENCH_3 = register("workbench_3", p -> new WorkbenchBlock(p, 3), BlockBehaviour.Properties.of()
+			.mapColor(MapColor.METAL).strength(4.5f).sound(SoundType.METAL));
+	public static final Block RECYCLER = register("recycler", RecyclerBlock::new, BlockBehaviour.Properties.of()
+			.mapColor(MapColor.COLOR_YELLOW).strength(4.0f).requiresCorrectToolForDrops().sound(SoundType.METAL));
+
 	private ModBlocks() {
 	}
 
@@ -36,6 +56,14 @@ public final class ModBlocks {
 				.strength(3.0f, 6.0f)
 				.requiresCorrectToolForDrops()
 				.sound(SoundType.STONE);
+	}
+
+	private static BlockBehaviour.Properties barrel(MapColor color) {
+		return BlockBehaviour.Properties.of()
+				.mapColor(color)
+				.strength(1.0f)
+				.sound(SoundType.METAL)
+				.noOcclusion();
 	}
 
 	private static <T extends Block> T register(String name, Function<BlockBehaviour.Properties, T> factory, BlockBehaviour.Properties properties) {

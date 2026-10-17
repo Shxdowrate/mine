@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SSS",
+    "ICI",
+    "PPP"
+  ],
+  "key": {
+    "S": "solorust:scrap",
+    "I": "minecraft:iron_ingot",
+    "C": "minecraft:crafting_table",
+    "P": "#minecraft:planks"
+  },
+  "result": {
+    "id": "solorust:workbench_1"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "#minecraft:planks",
+    "#minecraft:planks",
+    "minecraft:iron_ingot",
+    "minecraft:flint"
+  ],
+  "result": {
+    "id": "solorust:eoka_pistol"
+  }
+}

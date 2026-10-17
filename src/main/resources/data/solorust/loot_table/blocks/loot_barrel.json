@@ -1,0 +1,134 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "solorust:scrap",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 2,
+                "max": 4
+              },
+              "add": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 1,
+        "max": 2
+      },
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "solorust:rope",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:metal_blade",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:gears",
+          "weight": 6
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:metal_pipe",
+          "weight": 6
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:metal_spring",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:tarp",
+          "weight": 6
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:road_signs",
+          "weight": 6
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:sewing_kit",
+          "weight": 6
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:semi_automatic_body",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:smg_body",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:tech_trash",
+          "weight": 2
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "solorust:pistol_ammo",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 3,
+                "max": 6
+              },
+              "add": false
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:handmade_shell",
+          "weight": 4,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 3,
+                "max": 6
+              },
+              "add": false
+            }
+          ]
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 14
+        }
+      ]
+    }
+  ]
+}

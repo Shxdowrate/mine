@@ -3,6 +3,12 @@
   "values": [
     "solorust:stone_node",
     "solorust:metal_node",
-    "solorust:sulfur_node"
+    "solorust:sulfur_node",
+    "solorust:loot_barrel",
+    "solorust:oil_barrel",
+    "solorust:military_crate",
+    "solorust:workbench_2",
+    "solorust:workbench_3",
+    "solorust:recycler"
   ]
 }

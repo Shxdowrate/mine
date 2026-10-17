@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "minecraft:gunpowder",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone"
+  ],
+  "result": {
+    "id": "solorust:handmade_shell",
+    "count": 4
+  }
+}

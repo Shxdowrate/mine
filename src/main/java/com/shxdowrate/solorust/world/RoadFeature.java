@@ -76,6 +76,10 @@ public class RoadFeature extends Feature<NoneFeatureConfiguration> {
 			}
 		}
 
+		for (RoadNetwork.Road road : roads) {
+			RoadsideProps.place(level, road, minX, minZ, sampler, context.random());
+		}
+
 		return placed;
 	}
 

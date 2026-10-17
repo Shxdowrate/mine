@@ -84,6 +84,23 @@ public final class RoadNetwork {
 			return new double[]{mx + (bx - mx) * t, mz + (bz - mz) * t};
 		}
 
+		/** Единичное направление дороги в точке s. */
+		public double[] directionAt(double s) {
+			double dx;
+			double dz;
+
+			if (s <= len1) {
+				dx = mx - ax;
+				dz = mz - az;
+			} else {
+				dx = bx - mx;
+				dz = bz - mz;
+			}
+
+			double len = Math.hypot(dx, dz);
+			return len == 0 ? new double[]{1, 0} : new double[]{dx / len, dz / len};
+		}
+
 		/** Возвращает {расстояние до оси дороги, длина s вдоль дороги} для точки (x, z). */
 		public double[] project(double x, double z) {
 			double[] first = projectSegment(x, z, ax, az, mx, mz);
