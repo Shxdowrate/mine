@@ -226,7 +226,19 @@ public final class SuitManager {
 	private static void thrusterParticles(ServerPlayer player, SuitTier tier) {
 		ServerLevel level = player.level();
 		boolean boost = player.isSprinting();
-		var flame = tier == SuitTier.NANO ? ParticleTypes.SOUL_FIRE_FLAME : ParticleTypes.FLAME;
+		net.minecraft.core.particles.ParticleOptions flame = switch (tier) {
+			case NANO -> ParticleTypes.SOUL_FIRE_FLAME;
+			case SINGULARITY -> ParticleTypes.END_ROD;
+			case ARCHMAGE -> ParticleTypes.ENCHANT;
+			case APEX -> ParticleTypes.CLOUD;
+			default -> ParticleTypes.FLAME;
+		};
+
+		// «Апекс» на форсаже преодолевает звуковой барьер.
+		if (tier == SuitTier.APEX && boost && player.level().getGameTime() % 20 == 0) {
+			level.sendParticles(ParticleTypes.SONIC_BOOM, player.getX(), player.getY(0.5), player.getZ(), 1, 0, 0, 0, 0);
+			level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BREEZE_WIND_CHARGE_BURST.value(), SoundSource.PLAYERS, 0.7f, 0.5f);
+		}
 		Vec3 look = player.getViewVector(1f);
 		Vec3 flat = new Vec3(look.x, 0, look.z);
 		flat = flat.lengthSqr() < 1.0E-4 ? new Vec3(0, 0, 1) : flat.normalize();
@@ -243,7 +255,7 @@ public final class SuitManager {
 			}
 		}
 
-		if (boost && player.level().getGameTime() % 8 == 0) {
+		if (boost && tier != SuitTier.ARCHMAGE && tier != SuitTier.APEX && player.level().getGameTime() % 8 == 0) {
 			level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BLAZE_SHOOT, SoundSource.PLAYERS, 0.25f, 0.5f);
 		}
 	}
@@ -325,31 +337,48 @@ public final class SuitManager {
 	private static void effects(ServerPlayer player, SuitTier tier) {
 		if (tier != SuitTier.MK1) {
 			// Шлем с ночным видением (иконку не показываем — это просто «режим шлема»).
-			refresh(player, MobEffects.NIGHT_VISION);
+			refresh(player, MobEffects.NIGHT_VISION, 0);
 		}
 
-		if (tier == SuitTier.NANO) {
-			refresh(player, MobEffects.WATER_BREATHING);
-			refresh(player, MobEffects.FIRE_RESISTANCE);
-		}
+		switch (tier) {
+			case NANO -> {
+				refresh(player, MobEffects.WATER_BREATHING, 0);
+				refresh(player, MobEffects.FIRE_RESISTANCE, 0);
+			}
+			case TITAN, SINGULARITY -> refresh(player, MobEffects.FIRE_RESISTANCE, 0);
+			// «Апекс» почти неуязвим, пока сыт; голодный — обычный человек в костюме.
+			case APEX -> refresh(player, MobEffects.RESISTANCE, player.getFoodData().getFoodLevel() >= 14 ? 2 : 0);
+			case MINER -> refresh(player, MobEffects.HASTE, 1);
+			case BUILDER -> refresh(player, MobEffects.HASTE, 0);
+			case DIVER -> {
+				refresh(player, MobEffects.WATER_BREATHING, 0);
+				refresh(player, MobEffects.CONDUIT_POWER, 0);
 
-		if (tier == SuitTier.TITAN) {
-			refresh(player, MobEffects.FIRE_RESISTANCE);
-		}
-	}
-
-	private static void refresh(ServerPlayer player, Holder<MobEffect> effect) {
-		MobEffectInstance current = player.getEffect(effect);
-
-		if (current == null || (current.isAmbient() && current.getDuration() < 260)) {
-			if (current == null || current.isAmbient()) {
-				player.addEffect(new MobEffectInstance(effect, 400, 0, true, false, false));
+				if (player.isInWater()) {
+					refresh(player, MobEffects.DOLPHINS_GRACE, 0);
+				}
+			}
+			default -> {
 			}
 		}
 	}
 
+	private static void refresh(ServerPlayer player, Holder<MobEffect> effect, int amplifier) {
+		MobEffectInstance current = player.getEffect(effect);
+
+		// Чужие (не костюмные) эффекты — зелья, маяк — не трогаем.
+		if (current != null && !current.isAmbient()) {
+			return;
+		}
+
+		if (current == null || current.getDuration() < 260 || current.getAmplifier() != amplifier) {
+			player.addEffect(new MobEffectInstance(effect, 400, amplifier, true, false, false));
+		}
+	}
+
 	private static void removeSuitEffects(ServerPlayer player) {
-		for (Holder<MobEffect> effect : java.util.List.of(MobEffects.NIGHT_VISION, MobEffects.WATER_BREATHING, MobEffects.FIRE_RESISTANCE)) {
+		for (Holder<MobEffect> effect : java.util.List.of(MobEffects.NIGHT_VISION, MobEffects.WATER_BREATHING, MobEffects.FIRE_RESISTANCE,
+				MobEffects.RESISTANCE, MobEffects.HASTE, MobEffects.CONDUIT_POWER, MobEffects.DOLPHINS_GRACE)) {
 			MobEffectInstance current = player.getEffect(effect);
 
 			// Снимаем только «костюмные» эффекты (невидимые, ambient), зелья игрока не трогаем.
@@ -423,12 +452,12 @@ public final class SuitManager {
 		}
 
 		// Летающие костюмы и Титан гасят падение двигателями / амортизаторами.
-		if (source.is(DamageTypeTags.IS_FALL) && (tier.flight || tier == SuitTier.TITAN)) {
+		if (source.is(DamageTypeTags.IS_FALL) && (tier.flight || tier == SuitTier.TITAN || tier == SuitTier.SCOUT)) {
 			return false;
 		}
 
 		// Нанощит поглощает любой урон, кроме «неблокируемого» (пустота, /kill), пока есть энергия.
-		if (player.isUsingItem() && player.getUseItem().getItem() instanceof SuitWeaponItem item && item.weapon() == SuitWeapon.NANO_SHIELD
+		if (player.isUsingItem() && player.getUseItem().getItem() instanceof SuitWeaponItem item && (item.weapon() == SuitWeapon.NANO_SHIELD || item.weapon() == SuitWeapon.RUNE_SHIELD)
 				&& !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
 			int cost = Math.max(4, Math.round(amount * 8));
 

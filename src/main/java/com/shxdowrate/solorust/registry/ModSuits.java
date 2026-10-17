@@ -40,7 +40,7 @@ public final class ModSuits {
 						.component(DataComponents.UNBREAKABLE, Unit.INSTANCE)
 						.rarity(rarity(tier));
 
-				if (tier == SuitTier.TITAN || tier == SuitTier.NANO) {
+				if (tier.power >= 1.6f) {
 					properties.fireResistant();
 				}
 
@@ -83,8 +83,8 @@ public final class ModSuits {
 	private static Rarity rarity(SuitTier tier) {
 		return switch (tier) {
 			case MK1, LIGHT -> Rarity.UNCOMMON;
-			case MK2, MK3 -> Rarity.RARE;
-			case TITAN, NANO -> Rarity.EPIC;
+			case MK2, MK3, MINER, BUILDER, DIVER, SCOUT -> Rarity.RARE;
+			case TITAN, NANO, SINGULARITY, ARCHMAGE, APEX -> Rarity.EPIC;
 		};
 	}
 

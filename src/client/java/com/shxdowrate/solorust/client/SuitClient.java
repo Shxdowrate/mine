@@ -44,6 +44,7 @@ public final class SuitClient {
 		}
 
 		SuitTier tier = SuitTier.worn(player);
+		doubleJump(client, player, tier);
 
 		if (tier == null || !tier.flight || !player.getAbilities().flying || !client.options.keySprint.isDown()) {
 			return;
@@ -61,6 +62,25 @@ public final class SuitClient {
 		}
 
 		player.setDeltaMovement(velocity);
+	}
+
+	private static boolean jumpWasDown = false;
+	private static boolean doubleJumpUsed = false;
+
+	/** «Призрак»: второй прыжок в воздухе. */
+	private static void doubleJump(Minecraft client, LocalPlayer player, SuitTier tier) {
+		boolean down = client.options.keyJump.isDown();
+
+		if (player.onGround() || player.isInWater() || player.getAbilities().flying) {
+			doubleJumpUsed = false;
+		} else if (tier == SuitTier.SCOUT && down && !jumpWasDown && !doubleJumpUsed) {
+			Vec3 v = player.getDeltaMovement();
+			player.setDeltaMovement(v.x * 1.25, 0.62, v.z * 1.25);
+			player.playSound(net.minecraft.sounds.SoundEvents.BREEZE_JUMP, 0.6f, 1.4f);
+			doubleJumpUsed = true;
+		}
+
+		jumpWasDown = down;
 	}
 
 	// ------------------------------------------------------------------ HUD

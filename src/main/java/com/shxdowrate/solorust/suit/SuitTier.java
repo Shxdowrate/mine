@@ -73,7 +73,60 @@ public enum SuitTier {
 			350, 4, false, 0f, 0f, 0f, 0,
 			List.of(REPULSOR, SCANNER),
 			new Stats(0.10, 2, 0.08, 0.0, 0.5, 0.0, 0, 6),
-			0.8f);
+			0.8f),
+
+	// Космический костюм с ядрами: гравитация, время, пространство, материя, разум, жизнь и «Коллапс».
+	SINGULARITY("singularity", 0xFFFFD66B,
+			armor(6, 10, 12, 6, 6.0f, 0.2f, SoundEvents.ARMOR_EQUIP_NETHERITE),
+			3000, 15, true, 0.12f, 0.22f, 3.2f, 2,
+			List.of(GRAVITY_GRIP, TIME_DILATION, SPACE_JUMP, MATTER_SHIFT, MIND_LINK, LIFE_SURGE, COLLAPSE, REPULSOR, SCANNER),
+			new Stats(0.35, 8, 0.1, 0.0, 0.6, 2.0, 20, 64),
+			2.0f),
+
+	// Маг: брони почти нет, зато левитация, порталы, щиты, астрал и петля времени.
+	ARCHMAGE("archmage", 0xFFFFB347,
+			armor(2, 4, 5, 2, 1.0f, 0.0f, SoundEvents.ARMOR_EQUIP_LEATHER),
+			1500, 12, true, 0.06f, 0.08f, 1.6f, 1,
+			List.of(MYSTIC_BOLT, PORTAL, RUNE_SHIELD, ASTRAL_FORM, TIME_LOOP),
+			new Stats(0.10, 1, 0.05, 0.0, 0.5, 1.0, 4, 64),
+			1.3f),
+
+	// Сверхчеловек: летает быстрее всех, лучи из глаз, сила; почти неуязвим, пока сыт.
+	APEX("apex", 0xFFF2F2F2,
+			armor(3, 6, 8, 3, 4.0f, 0.4f, SoundEvents.ARMOR_EQUIP_LEATHER),
+			1800, 14, true, 0.14f, 0.26f, 3.6f, 1,
+			List.of(HEAT_VISION, SONIC_CLAP, SUPER_GRAB),
+			new Stats(0.45, 14, 0.25, 0.0, 0.6, 1.5, 20, 256),
+			1.8f),
+
+	// Рабочие костюмы.
+	MINER("miner", 0xFFFFD23D,
+			armor(3, 6, 7, 3, 2.0f, 0.1f, SoundEvents.ARMOR_EQUIP_IRON),
+			1000, 8, false, 0f, 0f, 0f, 0,
+			List.of(DRILL, SEISMIC, LIGHT_FLARE, SCANNER),
+			new Stats(0.05, 3, 0.05, 0.0, 0.5, 1.5, 0, 10),
+			1.0f),
+
+	BUILDER("builder", 0xFFFF8A3D,
+			armor(3, 5, 6, 3, 1.0f, 0.0f, SoundEvents.ARMOR_EQUIP_IRON),
+			1000, 10, true, 0.07f, 0.1f, 1.6f, 1,
+			List.of(BUILD_WALL, BUILD_BRIDGE, BUILD_FLOOR, DEMOLISH, LIGHT_FLARE),
+			new Stats(0.10, 1, 0.0, 0.0, 0.6, 5.0, 0, 64),
+			1.0f),
+
+	DIVER("diver", 0xFF4FE3C1,
+			armor(3, 6, 7, 3, 2.0f, 0.1f, SoundEvents.ARMOR_EQUIP_TURTLE),
+			1000, 8, false, 0f, 0f, 0f, 0,
+			List.of(MICRO_MISSILES, CUTTING_LASER, SCANNER),
+			new Stats(0.05, 3, 0.0, 0.0, 0.5, 1.0, 4, 12),
+			1.1f),
+
+	SCOUT("scout", 0xFF8FD16B,
+			armor(2, 5, 6, 2, 1.0f, 0.0f, SoundEvents.ARMOR_EQUIP_LEATHER),
+			800, 8, false, 0f, 0f, 0f, 0,
+			List.of(CLOAK, GRAPPLE, SCANNER),
+			new Stats(0.35, 2, 0.15, 0.0, 0.6, 0.0, 0, 16),
+			1.0f);
 
 	/**
 	 * Бонусы полного комплекта.

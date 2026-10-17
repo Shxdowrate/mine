@@ -65,11 +65,16 @@ public final class SuitWeapons {
 			case NANO_SHIELD -> sound(level, player, SoundEvents.BEACON_POWER_SELECT, 0.8f, 1.6f);
 			case CHEST_BEAM -> sound(level, player, SoundEvents.WARDEN_SONIC_CHARGE, 1.0f, 1.3f);
 			case NANO_CANNON -> sound(level, player, SoundEvents.RESPAWN_ANCHOR_CHARGE, 1.0f, 0.8f);
+			case COLLAPSE -> sound(level, player, SoundEvents.BEACON_ACTIVATE, 1.5f, 0.5f);
+			case RUNE_SHIELD -> sound(level, player, SoundEvents.EVOKER_CAST_SPELL, 0.8f, 1.2f);
+			case HEAT_VISION -> sound(level, player, SoundEvents.FIRECHARGE_USE, 0.6f, 1.6f);
+			case DRILL -> sound(level, player, SoundEvents.GRINDSTONE_USE, 0.8f, 0.6f);
 			default -> {
 			}
 		}
 
 		CUTTING.remove(player.getUUID());
+		SuitAbilities.releaseHeld(player);
 	}
 
 	/** ПКМ у мгновенных систем; у заряжаемых — отпускание ПКМ с долей заряда 0..1. */
@@ -85,6 +90,23 @@ public final class SuitWeapons {
 			case NANO_BLADE -> bladeDash(level, player, tier);
 			case CHEST_BEAM -> chestBeam(level, player, tier, charge);
 			case NANO_CANNON -> nanoCannon(level, player, tier, charge);
+			case GRAVITY_GRIP, SUPER_GRAB -> SuitAbilities.throwHeld(level, player, tier, weapon, charge);
+			case TIME_DILATION -> SuitAbilities.timeDilation(level, player);
+			case SPACE_JUMP -> SuitAbilities.spaceJump(level, player);
+			case MATTER_SHIFT -> SuitAbilities.matterShift(level, player);
+			case MIND_LINK -> SuitAbilities.mindLink(level, player);
+			case LIFE_SURGE -> SuitAbilities.lifeSurge(level, player);
+			case COLLAPSE -> SuitAbilities.collapse(level, player, tier);
+			case MYSTIC_BOLT -> SuitAbilities.mysticBolt(level, player, tier);
+			case PORTAL -> SuitAbilities.portal(level, player);
+			case ASTRAL_FORM -> SuitAbilities.astralForm(level, player);
+			case TIME_LOOP -> SuitAbilities.timeLoop(level, player);
+			case SONIC_CLAP -> SuitAbilities.sonicClap(level, player, tier);
+			case SEISMIC -> SuitAbilities.seismic(level, player);
+			case LIGHT_FLARE -> SuitAbilities.lightFlare(level, player);
+			case BUILD_WALL, BUILD_BRIDGE, BUILD_FLOOR, DEMOLISH -> SuitAbilities.build(level, player, weapon);
+			case CLOAK -> SuitAbilities.cloak(level, player);
+			case GRAPPLE -> SuitAbilities.grapple(level, player);
 			default -> {
 			}
 		}
@@ -97,6 +119,9 @@ public final class SuitWeapons {
 			case SHOULDER_GUNS -> shoulderGuns(level, player, tier, ticks);
 			case CUTTING_LASER -> laser(level, player, tier, ticks);
 			case NANO_SHIELD -> shieldVisual(level, player, ticks);
+			case RUNE_SHIELD -> SuitAbilities.runeShield(level, player, ticks);
+			case HEAT_VISION -> SuitAbilities.heatVision(level, player, tier, ticks);
+			case DRILL -> SuitAbilities.drill(level, player, ticks);
 			default -> {
 			}
 		}
@@ -104,10 +129,22 @@ public final class SuitWeapons {
 
 	/** Каждый тик зарядки CHARGE-систем: искры собираются к точке выстрела. */
 	public static void charging(ServerLevel level, ServerPlayer player, SuitTier tier, SuitWeapon weapon, int ticks) {
+		if (weapon == SuitWeapon.GRAVITY_GRIP || weapon == SuitWeapon.SUPER_GRAB) {
+			SuitAbilities.grip(level, player, weapon, ticks);
+
+			if (weapon == SuitWeapon.SUPER_GRAB) {
+				return;
+			}
+		}
+
 		Vec3 origin = weapon == SuitWeapon.CHEST_BEAM ? chest(player) : hand(player);
 		RandomSource random = player.getRandom();
 		float fraction = Math.min(1f, (float) ticks / weapon.maxCharge);
-		ParticleOptions particle = weapon == SuitWeapon.NANO_CANNON ? ParticleTypes.SOUL_FIRE_FLAME : ParticleTypes.END_ROD;
+		ParticleOptions particle = switch (weapon) {
+			case NANO_CANNON -> ParticleTypes.SOUL_FIRE_FLAME;
+			case GRAVITY_GRIP, COLLAPSE -> ParticleTypes.REVERSE_PORTAL;
+			default -> ParticleTypes.END_ROD;
+		};
 
 		for (int i = 0; i < 1 + (int) (fraction * 3); i++) {
 			Vec3 from = origin.add(random.nextGaussian() * 0.6, random.nextGaussian() * 0.6, random.nextGaussian() * 0.6);

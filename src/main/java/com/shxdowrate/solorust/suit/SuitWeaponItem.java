@@ -117,6 +117,8 @@ public class SuitWeaponItem extends Item {
 		int charge = getUseDuration(stack, entity) - remainingTime;
 
 		if (tier == null || !tier.has(weapon) || charge < weapon.minCharge) {
+			// Не дозарядили — захваченные цели просто падают.
+			SuitAbilities.releaseHeld(player);
 			return false;
 		}
 
@@ -141,8 +143,8 @@ public class SuitWeaponItem extends Item {
 	@Override
 	public ItemUseAnimation getUseAnimation(ItemStack stack) {
 		return switch (weapon) {
-			case NANO_SHIELD -> ItemUseAnimation.BLOCK;
-			case CHEST_BEAM, NANO_CANNON -> ItemUseAnimation.BOW;
+			case NANO_SHIELD, RUNE_SHIELD -> ItemUseAnimation.BLOCK;
+			case CHEST_BEAM, NANO_CANNON, COLLAPSE -> ItemUseAnimation.BOW;
 			default -> ItemUseAnimation.NONE;
 		};
 	}
