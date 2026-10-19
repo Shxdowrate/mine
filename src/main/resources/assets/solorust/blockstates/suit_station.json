@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "loaded=false": {
+      "model": "solorust:block/suit_station_empty"
+    },
+    "loaded=true": {
+      "model": "solorust:block/suit_station_loaded"
+    }
+  }
+}

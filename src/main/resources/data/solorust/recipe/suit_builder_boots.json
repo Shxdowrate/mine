@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "SMS",
+    "MPM",
+    "SMS"
+  ],
+  "key": {
+    "S": "minecraft:bricks",
+    "M": "minecraft:iron_ingot",
+    "P": "solorust:suit_mk1_boots"
+  },
+  "result": {
+    "id": "solorust:suit_builder_boots"
+  }
+}

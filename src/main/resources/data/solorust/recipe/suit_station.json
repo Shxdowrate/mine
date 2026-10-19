@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "IRI",
+    "GCG",
+    "BBB"
+  ],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "R": "minecraft:redstone_block",
+    "G": "solorust:gears",
+    "C": "solorust:suit_power_core",
+    "B": "minecraft:iron_block"
+  },
+  "result": {
+    "id": "solorust:suit_station"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "MCM",
+    "MSM",
+    "MMM"
+  ],
+  "key": {
+    "M": "minecraft:iron_ingot",
+    "S": "solorust:scrap",
+    "C": "solorust:suit_power_core"
+  },
+  "result": {
+    "id": "solorust:suit_mk1_chestplate"
+  }
+}

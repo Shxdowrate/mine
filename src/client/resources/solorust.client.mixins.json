@@ -4,7 +4,8 @@
 	"compatibilityLevel": "JAVA_25",
 	"client": [
 		"FovMixin",
-		"ScrollMixin"
+		"ScrollMixin",
+		"EntityOutlineMixin"
 	],
 	"injectors": {
 		"defaultRequire": 0
