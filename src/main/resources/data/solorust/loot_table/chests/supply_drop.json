@@ -279,6 +279,46 @@
           ]
         }
       ]
+    },
+    {
+      "rolls": 1,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "solorust:power_stone",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:space_stone",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:reality_stone",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:soul_stone",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:time_stone",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "solorust:mind_stone",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 18
+        }
+      ]
     }
   ]
 }

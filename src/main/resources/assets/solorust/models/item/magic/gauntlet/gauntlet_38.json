@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "solorust:item/magic/gauntlet/gauntlet_38"
+  }
+}
