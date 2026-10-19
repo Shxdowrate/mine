@@ -2,6 +2,7 @@ package com.shxdowrate.solorust.registry;
 
 import com.shxdowrate.solorust.SoloRust;
 import com.shxdowrate.solorust.item.GunItem;
+import com.shxdowrate.solorust.magic.MagicItems;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -35,6 +36,8 @@ public final class ModCreativeTab {
 
 						entries.accept(stack);
 					}
+
+					MagicItems.creativeStacks().forEach(entries::accept);
 				})
 				.build());
 	}

@@ -1,6 +1,7 @@
 package com.shxdowrate.solorust.network;
 
 import com.shxdowrate.solorust.gun.GunLogic;
+import com.shxdowrate.solorust.magic.ArtifactItem;
 
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -12,6 +13,16 @@ public final class ModNetworking {
 	public static void init() {
 		PayloadTypeRegistry.serverboundPlay().register(GunActionPayload.TYPE, GunActionPayload.CODEC);
 		PayloadTypeRegistry.clientboundPlay().register(RecoilPayload.TYPE, RecoilPayload.CODEC);
+		PayloadTypeRegistry.serverboundPlay().register(ArtifactPayload.TYPE, ArtifactPayload.CODEC);
+
+		ServerPlayNetworking.registerGlobalReceiver(ArtifactPayload.TYPE, (payload, context) -> {
+			switch (payload.action()) {
+				case ArtifactPayload.SELECT -> ArtifactItem.select(context.player(), payload.value());
+				case ArtifactPayload.CAST -> ArtifactItem.cast(context.player(), payload.value());
+				default -> {
+				}
+			}
+		});
 
 		ServerPlayNetworking.registerGlobalReceiver(GunActionPayload.TYPE, (payload, context) -> {
 			switch (payload.action()) {

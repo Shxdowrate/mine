@@ -1,6 +1,7 @@
 package com.shxdowrate.solorust;
 
 import com.shxdowrate.solorust.gun.ReloadSounds;
+import com.shxdowrate.solorust.magic.MagicItems;
 import com.shxdowrate.solorust.mechanics.Airdrops;
 import com.shxdowrate.solorust.mechanics.Blueprints;
 import com.shxdowrate.solorust.network.ModNetworking;
@@ -31,6 +32,7 @@ public class SoloRust implements ModInitializer {
 		ModBlocks.init();
 		ModBlockEntities.init();
 		ModItems.init();
+		MagicItems.init();
 		Blueprints.init();
 		ModNetworking.init();
 		ReloadSounds.init();

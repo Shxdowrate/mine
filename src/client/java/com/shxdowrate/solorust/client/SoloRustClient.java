@@ -26,7 +26,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.fabricmc.fabric.api.event.client.player.ClientPreAttackCallback;
 
 public class SoloRustClient implements ClientModInitializer {
-	private static final KeyMapping.Category CATEGORY = KeyMapping.Category.register(SoloRust.id("controls"));
+	static final KeyMapping.Category CATEGORY = KeyMapping.Category.register(SoloRust.id("controls"));
 	public static final KeyMapping RELOAD = KeyMappingHelper.registerKeyMapping(
 			new KeyMapping("key.solorust.reload", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_R, CATEGORY));
 
@@ -52,6 +52,8 @@ public class SoloRustClient implements ClientModInitializer {
 
 		HudElementRegistry.attachElementBefore(VanillaHudElements.CROSSHAIR, SoloRust.id("scope"), GunHud::scope);
 		HudElementRegistry.attachElementAfter(VanillaHudElements.HOTBAR, SoloRust.id("ammo"), GunHud::ammo);
+
+		ArtifactClient.init();
 	}
 
 	public static boolean holdsGun(LocalPlayer player) {
