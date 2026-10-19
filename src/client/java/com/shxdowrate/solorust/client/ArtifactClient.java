@@ -115,22 +115,35 @@ public final class ArtifactClient {
 		player.playSound(SoundEvents.AMETHYST_BLOCK_CHIME, 0.5f, 0.8f + slot * 0.08f);
 	}
 
-	/**
-	 * Колёсико мыши (из миксина). Возвращает true, если прокрутку забрал артефакт.
-	 *
-	 * @param current слот хотбара сейчас
-	 * @param next    слот, который выбрала бы ваниль
-	 */
-	public static boolean onScroll(int current, int next) {
+	private static double scrollAccumulator = 0;
+
+	/** Колёсико мыши (из миксина). Возвращает true, если прокрутку забрал артефакт. */
+	public static boolean onScroll(long handle, double xoffset, double yoffset) {
 		Minecraft mc = Minecraft.getInstance();
 
-		if (!active(mc)) {
+		if (handle != mc.getWindow().handle() || mc.getOverlay() != null || !active(mc)) {
+			scrollAccumulator = 0;
 			return false;
 		}
 
-		int delta = Math.floorMod(next - current, 9);
-		int step = delta == 0 ? 0 : (delta <= 4 ? 1 : -1);
-		select(mc.player, Math.floorMod(selected + step, 9));
+		boolean discrete = mc.options.discreteMouseScroll().get();
+		double sensitivity = mc.options.mouseWheelSensitivity().get();
+		double amount = (yoffset != 0 ? yoffset : -xoffset);
+		amount = (discrete ? Math.signum(amount) : amount) * sensitivity;
+
+		if (scrollAccumulator != 0 && Math.signum(amount) != Math.signum(scrollAccumulator)) {
+			scrollAccumulator = 0;
+		}
+
+		scrollAccumulator += amount;
+		int steps = (int) scrollAccumulator;
+
+		if (steps != 0) {
+			scrollAccumulator -= steps;
+			// Как в ванили: прокрутка вверх — влево (к меньшему номеру).
+			select(mc.player, Math.floorMod(selected - steps, 9));
+		}
+
 		return true;
 	}
 }
