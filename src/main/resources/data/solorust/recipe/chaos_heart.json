@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "OEO",
+    "ESE",
+    "OEO"
+  ],
+  "key": {
+    "O": "minecraft:crying_obsidian",
+    "E": "minecraft:ender_pearl",
+    "S": "minecraft:echo_shard"
+  },
+  "result": {
+    "id": "solorust:chaos_heart"
+  }
+}

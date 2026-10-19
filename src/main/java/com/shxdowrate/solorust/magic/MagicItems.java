@@ -25,7 +25,7 @@ public final class MagicItems {
 	public static final HeroItem SCARLET_TIARA = hero("scarlet_tiara", WandaAbilities.ABILITIES, WandaAbilities.COLORS, true);
 	public static final HeroItem SYMBIOTE = hero("symbiote", VenomAbilities.ABILITIES, VenomAbilities.COLORS, false);
 	public static final HeroItem FLASH_RING = hero("flash_ring", FlashAbilities.ABILITIES, FlashAbilities.COLORS, false);
-	public static final HeroItem SUPERMAN_CREST = hero("superman_crest", SupermanAbilities.ABILITIES, SupermanAbilities.COLORS, true);
+	public static final HeroItem SUPERMAN_CREST = hero("kryptonian_crystal", SupermanAbilities.ABILITIES, SupermanAbilities.COLORS, true);
 	public static final HeroItem BLOOD_VIAL = hero("blood_vial", BloodAbilities.ABILITIES, BloodAbilities.COLORS, true);
 	public static final HeroItem CHAOS_HEART = hero("chaos_heart", ChaosAbilities.ABILITIES, ChaosAbilities.COLORS, true);
 	public static final List<HeroItem> HEROES = List.of(MJOLNIR, SCARLET_TIARA, SYMBIOTE, FLASH_RING, SUPERMAN_CREST, BLOOD_VIAL, CHAOS_HEART);

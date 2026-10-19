@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "NRN",
+    "RBR",
+    "NRN"
+  ],
+  "key": {
+    "N": "minecraft:nether_wart",
+    "R": "minecraft:redstone",
+    "B": "minecraft:glass_bottle"
+  },
+  "result": {
+    "id": "solorust:blood_vial"
+  }
+}

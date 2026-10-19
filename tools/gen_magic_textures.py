@@ -195,6 +195,159 @@ def ring():
     return img
 
 
+# ------------------------------------------------------------------ артефакты героев
+
+HEROES = {
+    # Боевой молот с кожаной обмоткой рукояти.
+    "mjolnir": ([
+        "................",
+        "..oooooooooooo..",
+        ".oHHHHHHHHHHHSo.",
+        ".oHSSSSSSSSSSDo.",
+        ".oHSSSSSSSSSSDo.",
+        ".oSDDDDDDDDDDDo.",
+        "..oooooooooooo..",
+        "......oLLo......",
+        "......oLlo......",
+        "......oLLo......",
+        "......oLlo......",
+        "......oLLo......",
+        "......oLlo......",
+        ".......oo.......",
+        "......o..o......",
+        ".......oo.......",
+    ], {"o": (0x2A, 0x2A, 0x30), "H": (0xE8, 0xEC, 0xF0), "S": (0xA8, 0xB0, 0xBA), "D": (0x70, 0x78, 0x84),
+        "L": (0x6D, 0x45, 0x26), "l": (0x8D, 0x5F, 0x38)}),
+    # Красная тиара.
+    "scarlet_tiara": ([
+        "................",
+        "................",
+        "................",
+        "...o........o...",
+        "..oRo......oRo..",
+        "..oRRo....oRRo..",
+        "..oRRRo..oRRRo..",
+        "..oRRRRooRRRRo..",
+        "..oRrRRRRRRrRo..",
+        "...oRrRRRRrRo...",
+        "....oRRggRRo....",
+        ".....oRggRo.....",
+        "......oRRo......",
+        ".......oo.......",
+        "................",
+        "................",
+    ], {"o": (0x3A, 0x05, 0x14), "R": (0xC2, 0x18, 0x3C), "r": (0xFF, 0x5C, 0x7A), "g": (0xFF, 0xC9, 0x4A)}),
+    # Сгусток живой чёрной слизи.
+    "symbiote": ([
+        "................",
+        "......oo........",
+        ".....oBBo...o...",
+        "....oBBBBo.oBo..",
+        "...oBBhBBBoBBo..",
+        "..oBBhhBBBBBBo..",
+        "..oBhBBBBBBBBBo.",
+        ".oBBBBBBBBBBBBo.",
+        ".oBBBBBBBBBBGBo.",
+        ".oBBBBBBBBBGGBo.",
+        "..oBBBBBBBGGBo..",
+        "..oBBoBBBBBBo...",
+        "...oo.oBBBBo....",
+        "......oBBo......",
+        ".......oo.......",
+        "................",
+    ], {"o": (0x00, 0x00, 0x00), "B": (0x14, 0x14, 0x1C), "h": (0x5A, 0x5A, 0x72), "G": (0x26, 0x26, 0x34)}),
+    # Золотое кольцо с янтарным камнем.
+    "flash_ring": ([
+        "................",
+        "................",
+        "......oooo......",
+        ".....oYYYYo.....",
+        "....oYyyyYYo....",
+        "....oYyRRYYo....",
+        "....oYRRRRYo....",
+        "....oYYRRYYo....",
+        "...ooYYYYYYoo...",
+        "..oGGoooooooGo..",
+        ".oGo........oGo.",
+        ".oG..........Go.",
+        ".oG..........Go.",
+        ".oGo........oGo.",
+        "..oGGGGGGGGGGo..",
+        "...oooooooooo...",
+    ], {"o": (0x4A, 0x2C, 0x08), "Y": (0xFF, 0xC1, 0x07), "y": (0xFF, 0xF1, 0x76), "R": (0xE6, 0x51, 0x00),
+        "G": (0xE0, 0xA8, 0x2E)}),
+    # Светящийся кристалл.
+    "kryptonian_crystal": ([
+        ".......o........",
+        "......oWo.......",
+        "......oWCo......",
+        ".....oWCCo......",
+        ".....oWCCCo.....",
+        "....oWCCCCo.....",
+        "....oWCCCCDo....",
+        "...oWCCCCCDo....",
+        "...oWCCCCCDDo...",
+        "...oWCCCCCDDo...",
+        "....oWCCCCDo....",
+        "....oWCCCDDo....",
+        ".....oCCCDo.....",
+        ".....oCCDDo.....",
+        "......oCDo......",
+        ".......oo.......",
+    ], {"o": (0x0D, 0x3B, 0x66), "W": (0xF2, 0xFB, 0xFF), "C": (0x9F, 0xE6, 0xFF), "D": (0x4F, 0xA8, 0xD8)}),
+    # Флакон с кровью.
+    "blood_vial": ([
+        "................",
+        "......oooo......",
+        "......oKKo......",
+        "......oKKo......",
+        ".....oGGGGo.....",
+        "......oGGo......",
+        ".....oGGGGo.....",
+        "....oGRRRRGo....",
+        "...oGRRrRRRGo...",
+        "...oGRrRRRRGo...",
+        "...oGRRRRRDGo...",
+        "...oGRRRRDDGo...",
+        "...oGRRRDDDGo...",
+        "....oGDDDDGo....",
+        ".....oooooo.....",
+        "................",
+    ], {"o": (0x2A, 0x10, 0x10), "K": (0x8D, 0x5F, 0x38), "G": (0xD8, 0xE6, 0xEC), "R": (0xB0, 0x00, 0x00),
+        "r": (0xFF, 0x52, 0x52), "D": (0x5A, 0x00, 0x00)}),
+    # Тёмное сердце-кристалл с трещинами хаоса.
+    "chaos_heart": ([
+        "................",
+        "................",
+        "..oooo....oooo..",
+        ".oVVVVo..oVVVVo.",
+        "oVvVVVVooVVVVMVo",
+        "oVvVVMVVVVVVMVVo",
+        "oVVVVVMVVVVMVVVo",
+        "oVVVVVVMMMMVVVVo",
+        ".oVVVVVVMgVVVVo.",
+        "..oVVVVVVMVVVo..",
+        "...oVVVVVMVVo...",
+        "....oVVVVMVo....",
+        ".....oVVVVo.....",
+        "......oVVo......",
+        ".......oo.......",
+        "................",
+    ], {"o": (0x0B, 0x02, 0x16), "V": (0x2C, 0x0A, 0x52), "v": (0x7A, 0x3C, 0xC8), "M": (0xF7, 0x25, 0x85),
+        "g": (0x7C, 0xFC, 0x00)}),
+}
+
+
+def from_grid(rows, palette):
+    img = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
+    px = img.load()
+    for y, row in enumerate(rows):
+        for x, ch in enumerate(row):
+            if ch in palette:
+                px[x, y] = tuple(palette[ch]) + (255,)
+    return img
+
+
 # ------------------------------------------------------------------ запись
 
 def model(path, texture):
@@ -238,6 +391,12 @@ def main():
     ring().save(os.path.join(TEX, "sorcerer_ring.png"))
     model(os.path.join(MODELS, "sorcerer_ring.json"), "solorust:item/magic/sorcerer_ring")
     item_def("sorcerer_ring", "solorust:item/magic/sorcerer_ring")
+
+    for name, (rows, palette) in HEROES.items():
+        assert len(rows) == 16 and all(len(r) == 16 for r in rows), name
+        from_grid(rows, palette).save(os.path.join(TEX, name + ".png"))
+        model(os.path.join(MODELS, name + ".json"), f"solorust:item/magic/{name}")
+        item_def(name, f"solorust:item/magic/{name}")
 
 
 if __name__ == "__main__":
