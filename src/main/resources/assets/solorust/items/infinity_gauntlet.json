@@ -1,0 +1,454 @@
+{
+ "model": {
+  "type": "minecraft:select",
+  "property": "minecraft:custom_model_data",
+  "index": 0,
+  "cases": [
+   {
+    "when": "1",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_1"
+    }
+   },
+   {
+    "when": "2",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_2"
+    }
+   },
+   {
+    "when": "3",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_3"
+    }
+   },
+   {
+    "when": "4",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_4"
+    }
+   },
+   {
+    "when": "5",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_5"
+    }
+   },
+   {
+    "when": "6",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_6"
+    }
+   },
+   {
+    "when": "7",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_7"
+    }
+   },
+   {
+    "when": "8",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_8"
+    }
+   },
+   {
+    "when": "9",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_9"
+    }
+   },
+   {
+    "when": "10",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_10"
+    }
+   },
+   {
+    "when": "11",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_11"
+    }
+   },
+   {
+    "when": "12",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_12"
+    }
+   },
+   {
+    "when": "13",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_13"
+    }
+   },
+   {
+    "when": "14",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_14"
+    }
+   },
+   {
+    "when": "15",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_15"
+    }
+   },
+   {
+    "when": "16",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_16"
+    }
+   },
+   {
+    "when": "17",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_17"
+    }
+   },
+   {
+    "when": "18",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_18"
+    }
+   },
+   {
+    "when": "19",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_19"
+    }
+   },
+   {
+    "when": "20",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_20"
+    }
+   },
+   {
+    "when": "21",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_21"
+    }
+   },
+   {
+    "when": "22",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_22"
+    }
+   },
+   {
+    "when": "23",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_23"
+    }
+   },
+   {
+    "when": "24",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_24"
+    }
+   },
+   {
+    "when": "25",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_25"
+    }
+   },
+   {
+    "when": "26",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_26"
+    }
+   },
+   {
+    "when": "27",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_27"
+    }
+   },
+   {
+    "when": "28",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_28"
+    }
+   },
+   {
+    "when": "29",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_29"
+    }
+   },
+   {
+    "when": "30",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_30"
+    }
+   },
+   {
+    "when": "31",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_31"
+    }
+   },
+   {
+    "when": "32",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_32"
+    }
+   },
+   {
+    "when": "33",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_33"
+    }
+   },
+   {
+    "when": "34",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_34"
+    }
+   },
+   {
+    "when": "35",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_35"
+    }
+   },
+   {
+    "when": "36",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_36"
+    }
+   },
+   {
+    "when": "37",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_37"
+    }
+   },
+   {
+    "when": "38",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_38"
+    }
+   },
+   {
+    "when": "39",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_39"
+    }
+   },
+   {
+    "when": "40",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_40"
+    }
+   },
+   {
+    "when": "41",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_41"
+    }
+   },
+   {
+    "when": "42",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_42"
+    }
+   },
+   {
+    "when": "43",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_43"
+    }
+   },
+   {
+    "when": "44",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_44"
+    }
+   },
+   {
+    "when": "45",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_45"
+    }
+   },
+   {
+    "when": "46",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_46"
+    }
+   },
+   {
+    "when": "47",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_47"
+    }
+   },
+   {
+    "when": "48",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_48"
+    }
+   },
+   {
+    "when": "49",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_49"
+    }
+   },
+   {
+    "when": "50",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_50"
+    }
+   },
+   {
+    "when": "51",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_51"
+    }
+   },
+   {
+    "when": "52",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_52"
+    }
+   },
+   {
+    "when": "53",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_53"
+    }
+   },
+   {
+    "when": "54",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_54"
+    }
+   },
+   {
+    "when": "55",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_55"
+    }
+   },
+   {
+    "when": "56",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_56"
+    }
+   },
+   {
+    "when": "57",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_57"
+    }
+   },
+   {
+    "when": "58",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_58"
+    }
+   },
+   {
+    "when": "59",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_59"
+    }
+   },
+   {
+    "when": "60",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_60"
+    }
+   },
+   {
+    "when": "61",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_61"
+    }
+   },
+   {
+    "when": "62",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_62"
+    }
+   },
+   {
+    "when": "63",
+    "model": {
+     "type": "minecraft:model",
+     "model": "solorust:item/magic/gauntlet/gauntlet_63"
+    }
+   }
+  ],
+  "fallback": {
+   "type": "minecraft:model",
+   "model": "solorust:item/magic/gauntlet/gauntlet_0"
+  }
+ }
+}

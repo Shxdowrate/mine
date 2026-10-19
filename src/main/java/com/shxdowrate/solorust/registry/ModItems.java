@@ -122,7 +122,7 @@ public final class ModItems {
 		return item;
 	}
 
-	private static <T extends Item> T register(String name, Function<Item.Properties, T> factory, Item.Properties properties) {
+	public static <T extends Item> T register(String name, Function<Item.Properties, T> factory, Item.Properties properties) {
 		ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, SoloRust.id(name));
 		T item = Registry.register(BuiltInRegistries.ITEM, key, factory.apply(properties.setId(key)));
 		ITEMS.add(item);

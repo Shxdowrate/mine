@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "solorust:suit_titan_helmet",
+    "solorust:suit_titan_chestplate",
+    "solorust:suit_titan_leggings",
+    "solorust:suit_titan_boots",
+    "minecraft:lightning_rod"
+  ],
+  "result": {
+    "id": "solorust:titan_beacon"
+  }
+}

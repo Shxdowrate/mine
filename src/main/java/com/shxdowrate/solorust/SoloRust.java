@@ -1,6 +1,7 @@
 package com.shxdowrate.solorust;
 
 import com.shxdowrate.solorust.gun.ReloadSounds;
+import com.shxdowrate.solorust.magic.MagicItems;
 import com.shxdowrate.solorust.mechanics.Airdrops;
 import com.shxdowrate.solorust.mechanics.Blueprints;
 import com.shxdowrate.solorust.network.ModNetworking;
@@ -10,6 +11,14 @@ import com.shxdowrate.solorust.registry.ModSounds;
 import com.shxdowrate.solorust.registry.ModBlocks;
 import com.shxdowrate.solorust.registry.ModCreativeTab;
 import com.shxdowrate.solorust.registry.ModItems;
+import com.shxdowrate.solorust.registry.ModSuits;
+import com.shxdowrate.solorust.suit.SuitManager;
+import com.shxdowrate.solorust.suit.SuitProjectiles;
+import com.shxdowrate.solorust.suit.SuitAssembly;
+import com.shxdowrate.solorust.suit.SuitActions;
+import com.shxdowrate.solorust.suit.SuitAbilities;
+import com.shxdowrate.solorust.suit.ChaosAbilities;
+import com.shxdowrate.solorust.suit.TitanDrop;
 import com.shxdowrate.solorust.registry.ModWorldgen;
 import com.shxdowrate.solorust.mechanics.VeinMiner;
 
@@ -31,6 +40,8 @@ public class SoloRust implements ModInitializer {
 		ModBlocks.init();
 		ModBlockEntities.init();
 		ModItems.init();
+		MagicItems.init();
+		ModSuits.init();
 		Blueprints.init();
 		ModNetworking.init();
 		ReloadSounds.init();
@@ -38,6 +49,13 @@ public class SoloRust implements ModInitializer {
 		ModCreativeTab.init();
 		ModWorldgen.init();
 		VeinMiner.init();
+		SuitManager.init();
+		SuitProjectiles.init();
+		SuitAssembly.init();
+		TitanDrop.init();
+		SuitActions.init();
+		SuitAbilities.init();
+		ChaosAbilities.init();
 
 		LOGGER.info("Solo Rust loaded");
 	}

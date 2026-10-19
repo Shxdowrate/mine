@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "SMS",
+    "MPM",
+    "SMS"
+  ],
+  "key": {
+    "S": "minecraft:amethyst_shard",
+    "M": "minecraft:netherite_ingot",
+    "P": "solorust:suit_mk3_chestplate"
+  },
+  "result": {
+    "id": "solorust:suit_nano_chestplate"
+  }
+}

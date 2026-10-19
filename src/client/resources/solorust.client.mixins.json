@@ -3,7 +3,9 @@
 	"package": "com.shxdowrate.solorust.client.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"client": [
-		"FovMixin"
+		"FovMixin",
+		"ScrollMixin",
+		"EntityOutlineMixin"
 	],
 	"injectors": {
 		"defaultRequire": 0

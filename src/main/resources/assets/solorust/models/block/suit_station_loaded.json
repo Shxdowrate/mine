@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "solorust:block/suit_station_side_loaded",
+    "top": "solorust:block/suit_station_top",
+    "bottom": "solorust:block/suit_station_bottom"
+  }
+}

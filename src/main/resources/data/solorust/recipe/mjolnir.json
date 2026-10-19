@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "BBB",
+    "BRB",
+    " S "
+  ],
+  "key": {
+    "B": "minecraft:iron_block",
+    "R": "minecraft:lightning_rod",
+    "S": "minecraft:stick"
+  },
+  "result": {
+    "id": "solorust:mjolnir"
+  }
+}

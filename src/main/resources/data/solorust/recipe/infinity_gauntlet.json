@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "GGG",
+    "GDG",
+    "GNG"
+  ],
+  "key": {
+    "G": "minecraft:gold_block",
+    "D": "minecraft:diamond_block",
+    "N": "minecraft:netherite_ingot"
+  },
+  "result": {
+    "id": "solorust:infinity_gauntlet"
+  }
+}
