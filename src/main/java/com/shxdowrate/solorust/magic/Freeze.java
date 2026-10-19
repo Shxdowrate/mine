@@ -69,15 +69,16 @@ final class Freeze {
 		for (Iterator<Map.Entry<Entity, State>> it = FROZEN.entrySet().iterator(); it.hasNext(); ) {
 			Map.Entry<Entity, State> entry = it.next();
 			Entity e = entry.getKey();
+			State state = entry.getValue();
 
 			if (e.isRemoved()) {
 				it.remove();
 				continue;
 			}
 
-			if (now >= entry.getValue().until) {
+			if (now >= state.until) {
 				it.remove();
-				release(e, entry.getValue().velocity);
+				release(e, state.velocity);
 				continue;
 			}
 

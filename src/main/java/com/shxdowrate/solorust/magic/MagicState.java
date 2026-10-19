@@ -206,10 +206,12 @@ public final class MagicState {
 		for (Iterator<Map.Entry<UUID, Long>> it = LOOP_UNTIL.entrySet().iterator(); it.hasNext(); ) {
 			Map.Entry<UUID, Long> e = it.next();
 
+			UUID id = e.getKey();
+
 			if (e.getValue() < now) {
 				it.remove();
-				LOOP.remove(e.getKey());
-				ServerPlayer player = server.getPlayerList().getPlayer(e.getKey());
+				LOOP.remove(id);
+				ServerPlayer player = server.getPlayerList().getPlayer(id);
 
 				if (player != null) {
 					player.sendOverlayMessage(Component.translatable("message.solorust.magic.loop_end").withStyle(ChatFormatting.GRAY));
