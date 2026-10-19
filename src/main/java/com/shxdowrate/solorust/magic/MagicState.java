@@ -105,6 +105,14 @@ public final class MagicState {
 	static final Map<UUID, Long> MIRROR = new HashMap<>();
 	static final Map<UUID, Long> SHIELD = new HashMap<>();
 	static final Map<UUID, Long> FALL_SAFE = new HashMap<>();
+	/** Скрытность без неуязвимости (камуфляж симбиота и т. п.). */
+	static final Map<UUID, Long> STEALTH = new HashMap<>();
+	/** Шипы: обидчик получает урон. */
+	static final Map<UUID, Long> THORNS = new HashMap<>();
+	/** Щит хаоса: часть ударов исчезает и бьёт обратно. */
+	static final Map<UUID, Long> CHAOS_SHIELD = new HashMap<>();
+	/** Вращающийся барьер: снаряды вокруг отражаются. */
+	static final Map<UUID, Long> DEFLECT = new HashMap<>();
 	/** Петля Дормамму: снимок и до какого тика действует. */
 	static final Map<UUID, Snapshot> LOOP = new HashMap<>();
 	static final Map<UUID, Long> LOOP_UNTIL = new HashMap<>();
@@ -202,6 +210,10 @@ public final class MagicState {
 		MIRROR.values().removeIf(t -> t < now);
 		SHIELD.values().removeIf(t -> t < now);
 		FALL_SAFE.values().removeIf(t -> t < now);
+		STEALTH.values().removeIf(t -> t < now);
+		THORNS.values().removeIf(t -> t < now);
+		CHAOS_SHIELD.values().removeIf(t -> t < now);
+		DEFLECT.values().removeIf(t -> t < now);
 
 		for (Iterator<Map.Entry<UUID, Long>> it = LOOP_UNTIL.entrySet().iterator(); it.hasNext(); ) {
 			Map.Entry<UUID, Long> e = it.next();
@@ -240,7 +252,11 @@ public final class MagicState {
 				}
 			}
 
-			if (MIRROR.containsKey(id) && now % 5 == 0) {
+			if (DEFLECT.containsKey(id)) {
+				deflect(player);
+			}
+
+			if ((MIRROR.containsKey(id) || STEALTH.containsKey(id)) && now % 5 == 0) {
 				dropAggro(player.level(), player);
 			}
 
@@ -449,6 +465,21 @@ public final class MagicState {
 			return false;
 		}
 
+		if (THORNS.containsKey(id) && attacker instanceof LivingEntity living && attacker != player && !source.is(net.minecraft.world.damagesource.DamageTypes.THORNS)) {
+			living.hurtServer(player.level(), player.level().damageSources().thorns(player), Math.max(3f, amount * 0.5f));
+		}
+
+		if (CHAOS_SHIELD.containsKey(id) && player.getRandom().nextFloat() < 0.6f) {
+			ServerLevel level = player.level();
+			level.sendParticles(Fx.dust(0xF72585, 1.2f), player.getX(), player.getY(0.6), player.getZ(), 15, 0.4, 0.6, 0.4, 0);
+
+			if (attacker instanceof LivingEntity living && attacker != player) {
+				living.hurtServer(level, level.damageSources().magic(), amount);
+			}
+
+			return false;
+		}
+
 		if (SHIELD.containsKey(id)) {
 			Vec3 from = source.getSourcePosition();
 
@@ -462,6 +493,23 @@ public final class MagicState {
 		}
 
 		return true;
+	}
+
+	/** Снаряды вокруг игрока разворачиваются обратно. */
+	private static void deflect(ServerPlayer player) {
+		ServerLevel level = player.level();
+
+		for (Entity e : level.getEntities(player, player.getBoundingBox().inflate(4),
+				e -> e instanceof net.minecraft.world.entity.projectile.Projectile p && p.getOwner() != player)) {
+			Vec3 away = e.position().subtract(player.position());
+
+			if (e.getDeltaMovement().dot(away) < 0) {
+				e.setDeltaMovement(away.normalize().scale(Math.max(1.0, e.getDeltaMovement().length())));
+				((net.minecraft.world.entity.projectile.Projectile) e).setOwner(player);
+				e.hurtMarked = true;
+				level.sendParticles(ParticleTypes.ELECTRIC_SPARK, e.getX(), e.getY(), e.getZ(), 6, 0.1, 0.1, 0.1, 0.2);
+			}
+		}
 	}
 
 	static void giveOrDrop(ServerPlayer player, ItemStack stack) {

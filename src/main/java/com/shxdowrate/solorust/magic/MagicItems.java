@@ -21,6 +21,15 @@ public final class MagicItems {
 			new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant());
 	public static final SorcererRingItem SORCERER_RING = register("sorcerer_ring", SorcererRingItem::new,
 			new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant());
+	public static final HeroItem MJOLNIR = hero("mjolnir", ThorAbilities.ABILITIES, ThorAbilities.COLORS, true);
+	public static final HeroItem SCARLET_TIARA = hero("scarlet_tiara", WandaAbilities.ABILITIES, WandaAbilities.COLORS, true);
+	public static final HeroItem SYMBIOTE = hero("symbiote", VenomAbilities.ABILITIES, VenomAbilities.COLORS, false);
+	public static final HeroItem FLASH_RING = hero("flash_ring", FlashAbilities.ABILITIES, FlashAbilities.COLORS, false);
+	public static final HeroItem SUPERMAN_CREST = hero("superman_crest", SupermanAbilities.ABILITIES, SupermanAbilities.COLORS, true);
+	public static final HeroItem BLOOD_VIAL = hero("blood_vial", BloodAbilities.ABILITIES, BloodAbilities.COLORS, true);
+	public static final HeroItem CHAOS_HEART = hero("chaos_heart", ChaosAbilities.ABILITIES, ChaosAbilities.COLORS, true);
+	public static final List<HeroItem> HEROES = List.of(MJOLNIR, SCARLET_TIARA, SYMBIOTE, FLASH_RING, SUPERMAN_CREST, BLOOD_VIAL, CHAOS_HEART);
+
 	public static final Map<InfinityStone, InfinityStoneItem> STONES = new EnumMap<>(InfinityStone.class);
 
 	static {
@@ -31,6 +40,11 @@ public final class MagicItems {
 	}
 
 	private MagicItems() {
+	}
+
+	private static HeroItem hero(String name, Ability[] abilities, int[] colors, boolean flight) {
+		return register(name, properties -> new HeroItem(properties, name, abilities, colors, flight),
+				new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant());
 	}
 
 	private static <T extends Item> T register(String name, Function<Item.Properties, T> factory, Item.Properties properties) {
@@ -49,6 +63,7 @@ public final class MagicItems {
 		}
 
 		list.add(new ItemStack(SORCERER_RING));
+		HEROES.forEach(hero -> list.add(new ItemStack(hero)));
 		return list;
 	}
 
