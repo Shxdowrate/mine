@@ -109,6 +109,10 @@ public final class HelmetHud {
 
 	/** Дальность подсветки мобов. */
 	public static double entityRange(SuitTier tier) {
+		if (tier.isWarden()) {
+			return tier.warden.helmetEntityRange();
+		}
+
 		return switch (tier) {
 			case MK1, LIGHT, BUILDER -> 16;
 			case MK2, MINER, DIVER -> 32;
@@ -116,11 +120,16 @@ public final class HelmetHud {
 			case TITAN -> 40;
 			case NANO, APEX, CHAOS -> 64;
 			case SINGULARITY -> 96;
+			default -> 32;
 		};
 	}
 
 	/** Радиус сканирования блоков. */
 	public static int blockRange(SuitTier tier) {
+		if (tier.isWarden()) {
+			return tier.warden.helmetBlockRange();
+		}
+
 		return switch (tier) {
 			case MK1, LIGHT, SCOUT -> 8;
 			case MK2, BUILDER, APEX -> 12;
@@ -128,6 +137,7 @@ public final class HelmetHud {
 			case TITAN -> 16;
 			case NANO, SINGULARITY, CHAOS -> 24;
 			case MINER -> 32;
+			default -> 12;
 		};
 	}
 

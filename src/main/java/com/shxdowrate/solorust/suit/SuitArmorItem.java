@@ -48,6 +48,11 @@ public class SuitArmorItem extends Item {
 	public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag flag) {
 		builder.accept(Component.translatable(tier.translationKey()).withColor(tier.hudColor & 0xFFFFFF));
 
+		if (tier.isWarden()) {
+			builder.accept(Component.literal("WARDEN · ").withStyle(ChatFormatting.DARK_GRAY)
+					.append(Component.translatable(tier.warden.translationKey()).withColor(tier.warden.color & 0xFFFFFF)));
+		}
+
 		if (type == ArmorType.CHESTPLATE) {
 			builder.accept(Component.translatable("tooltip.solorust.suit.energy", SuitEnergy.get(stack, tier), tier.maxEnergy)
 					.withStyle(ChatFormatting.AQUA));

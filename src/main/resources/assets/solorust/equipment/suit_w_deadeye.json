@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "solorust:suit_w_deadeye"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "solorust:suit_w_deadeye"
+      }
+    ]
+  }
+}

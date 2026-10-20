@@ -56,7 +56,7 @@ public final class ModCreativeTab {
 					entries.accept(ModSuits.POWER_CORE);
 					entries.accept(ModBlocks.item(ModBlocks.SUIT_STATION));
 					ModSuits.CONTAINERS.values().forEach(entries::accept);
-					ModSuits.ALL_ARMOR.forEach(entries::accept);
+					ModSuits.ALL_ARMOR.stream().filter(item -> !item.tier().isWarden()).forEach(entries::accept);
 				})
 				.build());
 	

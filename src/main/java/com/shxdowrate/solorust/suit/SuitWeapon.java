@@ -68,7 +68,15 @@ public enum SuitWeapon {
 	CHAOS_RIFT("chaos_rift", Mode.INSTANT, 60, 30, 0, 0),
 	CHAOS_SPHERE("chaos_sphere", Mode.HOLD, 2, 0, 0, 0),
 	CHAOS_CURSE("chaos_curse", Mode.INSTANT, 120, 200, 0, 0),
-	CHAOS_BLAST("chaos_blast", Mode.CHARGE, 1800, 1200, 40, 40);
+	CHAOS_BLAST("chaos_blast", Mode.CHARGE, 1800, 1200, 40, 40),
+
+	// --- War Machines: костюмы WARDEN ---
+	WRIST_RIFLE("wrist_rifle", Mode.HOLD, 2, 0, 0, 0),
+	MARKSMAN("marksman", Mode.INSTANT, 45, 24, 0, 0),
+	CRYO_MISSILE("cryo_missile", Mode.INSTANT, 90, 50, 0, 0),
+	LOVE_ARROW("love_arrow", Mode.INSTANT, 30, 12, 0, 0),
+	DECOY("decoy", Mode.INSTANT, 200, 300, 0, 0),
+	SOUL_DRAIN("soul_drain", Mode.HOLD, 3, 0, 0, 0);
 
 	public enum Mode {
 		INSTANT, HOLD, CHARGE

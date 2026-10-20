@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "solorust:rust"
+    "solorust:rust",
+    "solorust:war_machines",
+    "solorust:war_flat"
   ]
 }

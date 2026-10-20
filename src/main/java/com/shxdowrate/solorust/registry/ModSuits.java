@@ -81,10 +81,14 @@ public final class ModSuits {
 	}
 
 	private static Rarity rarity(SuitTier tier) {
+		if (tier.isWarden()) {
+			return tier.warden.itemRarity;
+		}
+
 		return switch (tier) {
 			case MK1, LIGHT -> Rarity.UNCOMMON;
 			case MK2, MK3, MINER, BUILDER, DIVER, SCOUT -> Rarity.RARE;
-			case TITAN, NANO, SINGULARITY, ARCHMAGE, APEX, CHAOS -> Rarity.EPIC;
+			default -> Rarity.EPIC;
 		};
 	}
 

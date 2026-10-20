@@ -68,6 +68,7 @@ public class SoloRustClient implements ClientModInitializer {
 		ArtifactClient.init();
 
 		SuitClient.init();
+		com.shxdowrate.solorust.client.war.WarClient.init();
 		HelmetSettings.load();
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			while (HELMET_TOGGLE.consumeClick()) {

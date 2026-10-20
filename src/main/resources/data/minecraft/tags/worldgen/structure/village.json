@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "solorust:war_village_plains",
+    "solorust:war_village_desert",
+    "solorust:war_village_savanna",
+    "solorust:war_village_snowy",
+    "solorust:war_village_taiga"
+  ]
+}

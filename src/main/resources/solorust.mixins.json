@@ -1,0 +1,12 @@
+{
+	"required": true,
+	"package": "com.shxdowrate.solorust.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"mixins": [
+		"ChunkGeneratorMixin",
+		"ChunkGeneratorStructureStateAccessor"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
