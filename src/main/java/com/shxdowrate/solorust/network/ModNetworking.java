@@ -3,6 +3,7 @@ package com.shxdowrate.solorust.network;
 import com.shxdowrate.solorust.gun.GunLogic;
 import com.shxdowrate.solorust.magic.ArtifactItem;
 import com.shxdowrate.solorust.suit.SuitActions;
+import com.shxdowrate.solorust.war.WardenShop;
 
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -31,6 +32,18 @@ public final class ModNetworking {
 			switch (payload.action()) {
 				case SuitActionPayload.TOGGLE -> SuitActions.toggle(context.player());
 				case SuitActionPayload.RECALL -> SuitActions.recall(context.player());
+				default -> {
+				}
+			}
+		});
+
+		PayloadTypeRegistry.serverboundPlay().register(WardenPayload.TYPE, WardenPayload.CODEC);
+
+		ServerPlayNetworking.registerGlobalReceiver(WardenPayload.TYPE, (payload, context) -> {
+			switch (payload.action()) {
+				case WardenPayload.OPEN_BOX -> WardenShop.openBox(context.player(), payload.value());
+				case WardenPayload.EQUIP -> WardenShop.equip(context.player(), payload.value());
+				case WardenPayload.UNEQUIP -> WardenShop.unequip(context.player());
 				default -> {
 				}
 			}

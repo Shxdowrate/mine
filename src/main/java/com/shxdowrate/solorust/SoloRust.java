@@ -12,6 +12,7 @@ import com.shxdowrate.solorust.registry.ModBlocks;
 import com.shxdowrate.solorust.registry.ModCreativeTab;
 import com.shxdowrate.solorust.registry.ModItems;
 import com.shxdowrate.solorust.registry.ModSuits;
+import com.shxdowrate.solorust.registry.ModWar;
 import com.shxdowrate.solorust.suit.SuitManager;
 import com.shxdowrate.solorust.suit.SuitProjectiles;
 import com.shxdowrate.solorust.suit.SuitAssembly;
@@ -42,6 +43,7 @@ public class SoloRust implements ModInitializer {
 		ModItems.init();
 		MagicItems.init();
 		ModSuits.init();
+		ModWar.init();
 		Blueprints.init();
 		ModNetworking.init();
 		ReloadSounds.init();

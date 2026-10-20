@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "solorust:suit_w_swamp_raider"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "solorust:suit_w_swamp_raider"
+      }
+    ]
+  }
+}

@@ -134,7 +134,41 @@ public enum SuitTier {
 			2600, 13, true, 0.10f, 0.2f, 3.0f, 2,
 			List.of(CHAOS_BOLT, CHAOS_CHAIN, CHAOS_WAVE, CHAOS_VORTEX, CHAOS_METEORS, CHAOS_RIFT, CHAOS_SPHERE, CHAOS_CURSE, CHAOS_BLAST, SCANNER),
 			new Stats(0.25, 7, 0.1, 0.0, 0.6, 1.0, 12, 64),
-			1.8f);
+			1.8f),
+
+	// ================================================================== War Machines: костюмы WARDEN
+	// Все летают. Характеристики задаёт редкость (WardenRarity), здесь — только цвет и способности.
+
+	W_HOT_ROD("w_hot_rod", 0xFFFF6A3D, WardenRarity.COMMON, List.of(REPULSOR)),
+	W_STEEL("w_steel", 0xFFC9D1DA, WardenRarity.COMMON, List.of(REPULSOR)),
+	W_ECO("w_eco", 0xFF7BE07B, WardenRarity.COMMON, List.of(REPULSOR)),
+	W_CARBON("w_carbon", 0xFF9AA0A8, WardenRarity.COMMON, List.of(REPULSOR)),
+	W_NAVY("w_navy", 0xFF5A8CFF, WardenRarity.COMMON, List.of(REPULSOR)),
+	W_DESERT("w_desert", 0xFFE8C77A, WardenRarity.COMMON, List.of(REPULSOR)),
+	W_ARCTIC("w_arctic", 0xFFE6F6FF, WardenRarity.COMMON, List.of(REPULSOR)),
+
+	W_DISCO("w_disco", 0xFFFF6BEA, WardenRarity.UNCOMMON, List.of(REPULSOR, FLARES)),
+	W_SWAMP_RAIDER("w_swamp_raider", 0xFF8FBF4A, WardenRarity.UNCOMMON, List.of(REPULSOR, WRIST_ROCKET)),
+	W_WOODLANDS("w_woodlands", 0xFF6FA35A, WardenRarity.UNCOMMON, List.of(REPULSOR, WRIST_RIFLE)),
+
+	W_SOLDIER("w_soldier", 0xFF9DB36B, WardenRarity.RARE, List.of(REPULSOR, WRIST_RIFLE, FLARES)),
+	W_BARRAGE("w_barrage", 0xFFFF8A3D, WardenRarity.RARE, List.of(REPULSOR, MICRO_MISSILES, FLARES)),
+	W_BUMBLE_BEE("w_bumble_bee", 0xFFFFD23D, WardenRarity.RARE, List.of(REPULSOR, SHOULDER_GUNS)),
+	W_MOUNTAIN("w_mountain", 0xFFB7A79A, WardenRarity.RARE, List.of(REPULSOR, PILE_DRIVER, WRIST_ROCKET)),
+	W_CHROMA("w_chroma", 0xFF6BFFF0, WardenRarity.RARE, List.of(REPULSOR, CHEST_BEAM)),
+
+	W_SHEMAGH("w_shemagh", 0xFFD9B98A, WardenRarity.EPIC, List.of(REPULSOR, WRIST_RIFLE, WRIST_ROCKET, FLARES)),
+	W_NIGHT_OPS("w_night_ops", 0xFF7DFF8A, WardenRarity.EPIC, List.of(REPULSOR, WRIST_RIFLE, CLOAK, SCANNER)),
+	W_DEADEYE("w_deadeye", 0xFFFF3D3D, WardenRarity.EPIC, List.of(REPULSOR, MARKSMAN, SCANNER)),
+	W_CRYO("w_cryo", 0xFF7FE8FF, WardenRarity.EPIC, List.of(REPULSOR, CRYO_MISSILE, FLARES)),
+
+	W_ARSENAL("w_arsenal", 0xFFB0B8C0, WardenRarity.LEGENDARY, List.of(WRIST_RIFLE, SHOULDER_GUNS, MICRO_MISSILES, FLARES, SCANNER)),
+	W_CUPID("w_cupid", 0xFFFF7FB0, WardenRarity.LEGENDARY, List.of(REPULSOR, LOVE_ARROW, FLARES)),
+
+	W_TRICKSTER("w_trickster", 0xFF4FE36B, WardenRarity.MYTHIC, List.of(REPULSOR, DECOY, CLOAK, SCANNER)),
+	W_PORTALMANCER("w_portalmancer", 0xFFFF9A2E, WardenRarity.MYTHIC, List.of(REPULSOR, PORTAL, MICRO_MISSILES)),
+	W_INFINITY("w_infinity", 0xFFFFE36B, WardenRarity.MYTHIC, List.of(REPULSOR, CHEST_BEAM, HEAVY_ROCKETS, SCANNER)),
+	W_WRAITH("w_wraith", 0xFF9C7BFF, WardenRarity.MYTHIC, List.of(REPULSOR, SOUL_DRAIN, CLOAK));
 
 	/**
 	 * Бонусы полного комплекта.
@@ -169,6 +203,8 @@ public enum SuitTier {
 	public final Stats stats;
 	/** Множитель урона встроенного оружия. */
 	public final float power;
+	/** Редкость, если это костюм WARDEN (War Machines); null — силовая броня. */
+	public final WardenRarity warden;
 
 	SuitTier(String id, int hudColor, ArmorMaterial material, int maxEnergy, int recharge, boolean flight, float flySpeed,
 			float boost, float maxBoostSpeed, int flightDrain, List<SuitWeapon> weapons, Stats stats, float power) {
@@ -185,6 +221,44 @@ public enum SuitTier {
 		this.weapons = weapons;
 		this.stats = stats;
 		this.power = power;
+		this.warden = null;
+	}
+
+	/** Костюм WARDEN: всё, кроме цвета и способностей, берётся из редкости. */
+	SuitTier(String id, int hudColor, WardenRarity rarity, List<SuitWeapon> weapons) {
+		this.id = id;
+		this.hudColor = hudColor;
+		this.material = withAsset(rarity.armor(), id);
+		this.maxEnergy = rarity.maxEnergy();
+		this.recharge = rarity.recharge();
+		this.flight = true;
+		this.flySpeed = rarity.flySpeed();
+		this.boost = rarity.boost();
+		this.maxBoostSpeed = rarity.maxBoostSpeed();
+		this.flightDrain = 2;
+		this.weapons = weapons;
+		this.stats = rarity.stats();
+		this.power = rarity.power();
+		this.warden = rarity;
+	}
+
+	public boolean isWarden() {
+		return warden != null;
+	}
+
+	/** Все костюмы WARDEN по порядку редкости. */
+	public static List<SuitTier> wardenSuits() {
+		return java.util.Arrays.stream(values()).filter(SuitTier::isWarden).toList();
+	}
+
+	public static SuitTier byId(String id) {
+		for (SuitTier tier : values()) {
+			if (tier.id.equals(id)) {
+				return tier;
+			}
+		}
+
+		return null;
 	}
 
 	public String translationKey() {
@@ -217,6 +291,10 @@ public enum SuitTier {
 	}
 
 	// ------------------------------------------------------------------ материалы
+
+	static ArmorMaterial armorOf(int boots, int legs, int chest, int helmet, float toughness, float knockback, Holder<SoundEvent> equipSound) {
+		return armor(boots, legs, chest, helmet, toughness, knockback, equipSound);
+	}
 
 	private static ArmorMaterial armor(int boots, int legs, int chest, int helmet, float toughness, float knockback, Holder<SoundEvent> equipSound) {
 		Map<ArmorType, Integer> defense = new EnumMap<>(ArmorType.class);

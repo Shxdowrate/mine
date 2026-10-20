@@ -28,6 +28,7 @@
 		"fabric-api": "*"
 	},
 	"mixins": [
+		"solorust.mixins.json",
 		{
 			"config": "solorust.client.mixins.json",
 			"environment": "client"

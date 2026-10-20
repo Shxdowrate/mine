@@ -1,0 +1,30 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 48151623,
+    "separation": 5,
+    "spacing": 14
+  },
+  "structures": [
+    {
+      "structure": "solorust:war_village_plains",
+      "weight": 1
+    },
+    {
+      "structure": "solorust:war_village_desert",
+      "weight": 1
+    },
+    {
+      "structure": "solorust:war_village_savanna",
+      "weight": 1
+    },
+    {
+      "structure": "solorust:war_village_snowy",
+      "weight": 1
+    },
+    {
+      "structure": "solorust:war_village_taiga",
+      "weight": 1
+    }
+  ]
+}

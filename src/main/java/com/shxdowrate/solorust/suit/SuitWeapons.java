@@ -117,6 +117,10 @@ public final class SuitWeapons {
 			case CHAOS_RIFT -> ChaosAbilities.rift(level, player, tier);
 			case CHAOS_CURSE -> ChaosAbilities.curse(level, player);
 			case CHAOS_BLAST -> ChaosAbilities.blast(level, player, tier);
+			case MARKSMAN -> WardenWeapons.marksman(level, player, tier);
+			case CRYO_MISSILE -> WardenWeapons.cryoMissile(level, player, tier);
+			case LOVE_ARROW -> WardenWeapons.loveArrow(level, player, tier);
+			case DECOY -> WardenWeapons.decoy(level, player, tier);
 			default -> {
 			}
 		}
@@ -133,6 +137,8 @@ public final class SuitWeapons {
 			case HEAT_VISION -> SuitAbilities.heatVision(level, player, tier, ticks);
 			case DRILL -> SuitAbilities.drill(level, player, ticks);
 			case CHAOS_SPHERE -> ChaosAbilities.sphere(level, player, tier, ticks);
+			case WRIST_RIFLE -> WardenWeapons.wristRifle(level, player, tier, ticks);
+			case SOUL_DRAIN -> WardenWeapons.soulDrain(level, player, tier, ticks);
 			default -> {
 			}
 		}
@@ -252,6 +258,9 @@ public final class SuitWeapons {
 			level.sendParticles(ParticleTypes.FIREWORK, c.x, c.y, c.z, 0, v.x, v.y, v.z, 1.0);
 			level.sendParticles(ParticleTypes.FLAME, c.x, c.y, c.z, 0, v.x * 0.6, v.y * 0.4, v.z * 0.6, 1.0);
 		}
+
+		// Ракеты бандитов уходят на ложные цели.
+		com.shxdowrate.solorust.war.BanditRockets.divert(level, player);
 
 		// Сбиваем снаряды вокруг.
 		for (Entity e : level.getEntities(player, player.getBoundingBox().inflate(14), e -> e instanceof Projectile)) {
